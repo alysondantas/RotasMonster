@@ -27,6 +27,7 @@ do código, e estou ciente que estes trechos não serão considerados para fins de 
 public class Celula {//Classe para um celula generica
 	private Celula proximo;//Referencia para a proxima celula
 	private Object objeto;//Objeto generico que vai estar dentro da celula
+	
 	/**
 	 * Metodo construtor da classe obrigando que venha um objeto quando criar celula
 	 * @param o

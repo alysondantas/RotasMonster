@@ -20,8 +20,6 @@ do código, e estou ciente que estes trechos não serão considerados para fins de 
 
  ******************************************************************************************/
 
-import br.uefs.ecomp.rotasMonster.util.*;//importo a interface da lista
-//import br.uefs.ecomp.sisNema.util.Iterador;//importo a interface do iterador
 
 /**
  * 
