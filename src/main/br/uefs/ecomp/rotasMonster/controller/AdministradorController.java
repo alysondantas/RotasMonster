@@ -35,6 +35,23 @@ public class AdministradorController {
 		throw new PontoNaoEncontradoException();
 	}
 	
+	public void alterarPonto(String nomeP, String novonomeP, int tipo) throws PontoNaoEncontradoException{
+		MeuIterador iterador = (MeuIterador) grafo.iterador();
+		Ponto ponto = null;
+		
+		while(iterador.temProximo()){
+			ponto = (Ponto) iterador.obterProximo();
+			if(ponto.getNome().equals(nomeP)){
+				break;
+			}
+		}
+		if(ponto == null){
+			throw new PontoNaoEncontradoException();
+		}
+		ponto.setNome(novonomeP);
+		ponto.setTipo(tipo);
+	}
+	
 	public Aresta cadastrarAresta(String nomeOrigem, int distancia, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException{
 		Ponto origem = null;
 		Ponto destino = null;
