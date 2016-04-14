@@ -2,26 +2,32 @@ package br.uefs.ecomp.rotasMonster.util;
 
 public class Ponto {
 	private String nome;
-	private int tipo;
-	private Lista aresta;
+	private int tipo = 0;
+	private Lista arestas;
 	
 	public Ponto(String nome, int tipo){
 		this.nome = nome;
 		this.tipo = tipo;
-		aresta = new Lista();
+		arestas = new Lista();
 	}
+	
+	/*
+	 * tipo = 1 / garagem
+	 * tipo = 2 / ponto normal
+	 * tipo = 3 /destino
+	 */
 	
 	/**
 	 * @return the aresta
 	 */
-	public Lista getAresta() {
-		return aresta;
+	public Lista getArestas() {
+		return arestas;
 	}
 	/**
-	 * @param aresta the aresta to set
+	 * @param aresta the arestsa to set
 	 */
-	public void setAresta(Lista aresta) {
-		this.aresta = aresta;
+	public void setArestas(Lista arestas) {
+		this.arestas = arestas;
 	}
 	/**
 	 * @return the nome

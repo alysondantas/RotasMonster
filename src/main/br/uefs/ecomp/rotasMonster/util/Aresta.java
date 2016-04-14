@@ -3,7 +3,7 @@ package br.uefs.ecomp.rotasMonster.util;
 public class Aresta {
 	private Ponto pontoOrigem;
 	private Ponto pontoDestino;
-	private int distancia;
+	private int distancia = 0;
 	
 	public Aresta(Ponto pontoOrig, Ponto pontoDest, int distancia){
 		this.pontoOrigem = pontoOrig;
