@@ -60,9 +60,72 @@ public class AdministradorController {
 		ponto.setTipo(tipo);
 	}
 	
-	public Ponto removerPonto(){
-		return null;
+	public Ponto removerPonto(String nomeP) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, ArestaNaoEncontradoException, PontoNuloException{
+		Ponto remover = recuperarPonto(nomeP);
+		Ponto auxP;
+		Aresta auxA;
+		Lista arestas = remover.getArestas();
+		MeuIterador iterador = (MeuIterador) arestas.iterador();
+		while(iterador.temProximo()){
+			auxA = (Aresta) iterador.obterProximo();
+			auxP = auxA.getPontoDestino();
+			//pode ser que de null point por estar usando auxA e remover ela... se sim é so dar null a auxA antes de chamar o metodo
+			removeAresta(remover, auxP);
+		}
+		
+		remover = (Ponto) grafo.removePonto(remover);
+		if(remover == null){
+			throw new PontoNaoEncontradoException();
+		}
+		return remover;
 	}
+	
+	public Aresta removeAresta(Ponto origem, Ponto destino) throws ArestaNaoEncontradoException, PontoNuloException{
+		if(origem == null || destino == null){
+			throw new PontoNuloException();
+		}
+		MeuIterador iterador;
+		int index = 0;
+		Aresta arestaAux;
+		Lista listOrg;
+		Lista listDest;
+		listOrg = origem.getArestas();
+		iterador = (MeuIterador) listOrg.iterador();
+		Aresta removida = null;
+		listDest = destino.getArestas();
+		
+		if(!listOrg.estaVazia()){
+			while(iterador.temProximo()){
+				arestaAux = (Aresta) iterador.obterProximo();
+				if(arestaAux.getPontoDestino().equals(destino)){
+					removida = (Aresta) listOrg.remover(index);
+					break;
+				}
+				index++;
+			}
+		}
+		if(removida == null){
+			throw new ArestaNaoEncontradoException();
+		}
+		removida = null;
+		index = 0;
+		iterador = (MeuIterador) listDest.iterador();
+		if(!listDest.estaVazia()){
+			while(iterador.temProximo()){
+				arestaAux = (Aresta) iterador.obterProximo();
+				if(arestaAux.getPontoDestino().equals(origem)){
+					removida = (Aresta) listDest.remover(index);
+					break;
+				}
+				index ++;
+			}
+		}
+		if(removida == null){
+			throw new ArestaNaoEncontradoException();
+		}
+		return removida;
+	}
+		
 	
 	public Aresta cadastrarAresta(String nomeOrigem, int distancia, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
 		Ponto origem = null;
@@ -119,9 +182,5 @@ public class AdministradorController {
 		return arestaO;
 	}
 	
-	public void alterarAresta(String nomeOrigem, String nomeDestino, int distancia){
-		MeuIterador iteradorgrafo;
-		MeuIterador iteradorponto;
-		
-	}
+	
 }
