@@ -1,28 +1,14 @@
 package br.uefs.ecomp.rotasMonster.util;
 
 public class Aresta {
-	private Ponto pontoOrigem;
 	private Ponto pontoDestino;
 	private int distancia = 0;
 	
-	public Aresta(Ponto pontoOrig, Ponto pontoDest, int distancia){
-		this.pontoOrigem = pontoOrig;
+	public Aresta(Ponto pontoDest, int distancia){
 		this.pontoDestino = pontoDest;
 		this.distancia = distancia;
 	}
 	
-	/**
-	 * @return the pontoOrigem
-	 */
-	public Ponto getPontoOrigem() {
-		return pontoOrigem;
-	}
-	/**
-	 * @param pontoOrigem the pontoOrigem to set
-	 */
-	public void setPontoOrigem(Ponto pontoOrigem) {
-		this.pontoOrigem = pontoOrigem;
-	}
 	/**
 	 * @return the pontoDestino
 	 */

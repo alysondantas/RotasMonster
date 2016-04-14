@@ -9,13 +9,21 @@ public class AdministradorController {
 		
 	}
 	
-	public Ponto cadastrarPonto(Ponto p) throws PontoNuloException, CampoObrigatorioInexistenteException{
+	public Ponto cadastrarPonto(Ponto p) throws PontoNuloException, CampoObrigatorioInexistenteException, ConflitoException{
 		if(p==null){
 			throw new PontoNuloException();
 		}else if(p.getTipo() == 0 || p.getNome().trim().isEmpty()){
 			throw new CampoObrigatorioInexistenteException();
 		}
-		grafo.inserirPonto(p);
+		Ponto aux = null;
+		try {
+			aux = recuperarPonto(p.getNome());
+		} catch (PontoNaoEncontradoException e) {
+			grafo.inserirPonto(p);
+		}
+		if(aux != null){
+			throw new ConflitoException();
+		}
 		return p;
 	}
 	
@@ -52,7 +60,11 @@ public class AdministradorController {
 		ponto.setTipo(tipo);
 	}
 	
-	public Aresta cadastrarAresta(String nomeOrigem, int distancia, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException{
+	public Ponto removerPonto(){
+		return null;
+	}
+	
+	public Aresta cadastrarAresta(String nomeOrigem, int distancia, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
 		Ponto origem = null;
 		Ponto destino = null;
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
@@ -77,10 +89,39 @@ public class AdministradorController {
 			throw new PontoNaoEncontradoException();
 		}
 		
-		Lista arestas = origem.getArestas();
-		Aresta aresta = new Aresta(origem, destino, distancia);
-		arestas.inserirInicio(aresta);
+		Aresta auxa;
+		Ponto auxp;
+		iterador.reiniciar();
+		MeuIterador iteradorPonto;
+		while(iterador.temProximo()){
+			auxp = (Ponto) iterador.obterProximo();
+			if(auxp.equals(origem)){
+				iteradorPonto = (MeuIterador) auxp.getArestas().iterador();
+				while(iteradorPonto.temProximo()){
+					auxa = (Aresta) iteradorPonto.obterProximo();
+					if(auxa.getPontoDestino().equals(destino)){
+						throw new ConflitoException();
+					}
+				}
+			}
+			
+		}
 		
-		return aresta;
+		
+		Lista arestas = origem.getArestas();
+		Aresta arestaO = new Aresta(destino, distancia);
+		arestas.inserirInicio(arestaO);
+		
+		arestas = destino.getArestas();
+		Aresta arestaD = new Aresta(origem, distancia);
+		arestas.inserirInicio(arestaD);
+		
+		return arestaO;
+	}
+	
+	public void alterarAresta(String nomeOrigem, String nomeDestino, int distancia){
+		MeuIterador iteradorgrafo;
+		MeuIterador iteradorponto;
+		
 	}
 }
