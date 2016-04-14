@@ -8,7 +8,7 @@ public interface IGrafo {
 	
 	public void inserirPonto(Object ponto);
 	
-	public Object recuperarPonto(Object ponto);
+	public Object recuperarPonto(int index);
 	
 	public Iterador iterador();
 }

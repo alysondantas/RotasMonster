@@ -23,7 +23,7 @@ public class Grafo implements IGrafo {
 	}
 	
 	@Override
-	public Object recuperarPonto(Object ponto) {
+	public Object recuperarPonto(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
