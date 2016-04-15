@@ -74,7 +74,163 @@ public class PontosTest {
 			assertTrue(true);
 		} catch (ConflitoException e) {
 			fail();
+		}	
+	}
+	
+	@Test
+	public void alterarPontoSucesso(){
+		Ponto a = new Ponto("A", 1);
+		Ponto a1 = null;
+		
+		try{
+			a1 = controller.cadastrarPonto(a);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
 		}
 		
+		try{
+			controller.alterarPonto("A", "A1", 2);
+		}catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			a1 = controller.recuperarPonto("A1");
+		} catch (PontoNaoEncontradoException | CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		assertEquals(a, a1);
+		assertEquals(a.getNome(), a1.getNome());
+		assertEquals(a.getTipo(), a1.getTipo());
+	}
+	
+	@Test
+	public void alterarPontoNomeExistente(){
+		Ponto a = new Ponto("A", 1);
+		Ponto b = new Ponto("B", 1);
+		Ponto a1 = null;
+		
+		try{
+			a1 = controller.cadastrarPonto(a);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try{
+			controller.cadastrarPonto(b);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try{
+			controller.alterarPonto("A", "B", 2);
+		}catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			assertTrue(true);
+		}
+		
+		try {
+			a1 = controller.recuperarPonto("A1");
+		} catch (PontoNaoEncontradoException | CampoObrigatorioInexistenteException e) {
+			assertTrue(true);
+		}
+		
+		assertEquals(a, a1);
+		assertEquals(a.getNome(), a1.getNome());
+		assertEquals(a.getTipo(), a1.getTipo());
+	}
+	
+	@Test
+	public void alterarPontoSemNome(){
+		Ponto a = new Ponto("A", 1);
+		Ponto b = new Ponto("B", 1);
+		Ponto a1 = null;
+		
+		try{
+			a1 = controller.cadastrarPonto(a);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try{
+			controller.cadastrarPonto(b);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try{
+			controller.alterarPonto("A", "   ", 2);
+		}catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			assertTrue(true);
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try{
+			controller.alterarPonto("B", "", 2);
+		}catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			assertTrue(true);
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			a1 = controller.recuperarPonto("   ");
+		} catch (PontoNaoEncontradoException | CampoObrigatorioInexistenteException e) {
+			assertTrue(true);
+		}
+		
+		assertEquals(a, a1);
+		assertEquals(a.getNome(), a1.getNome());
+		assertEquals(a.getTipo(), a1.getTipo());
+	}
+	
+	@Test
+	public void alterarPontoExistente(){
+		Ponto aux = null;
+		
+		try{
+			controller.alterarPonto("A", "B", 2);
+		}catch (PontoNaoEncontradoException e) {
+			assertTrue(true);
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		assertEquals(aux, null);
+
 	}
 }
