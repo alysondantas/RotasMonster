@@ -50,4 +50,31 @@ public class PontosTest {
 		}
 		
 	}
+	
+	@Test
+	public void cadastrarPontoSemNome(){
+		Ponto a = new Ponto("", 1);
+		Ponto b = new Ponto("    ", 1);
+		
+		try{
+			controller.cadastrarPonto(b);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			assertTrue(true);
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try{
+			controller.cadastrarPonto(a);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			assertTrue(true);
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+	}
 }

@@ -43,10 +43,10 @@ public class AdministradorController {
 		throw new PontoNaoEncontradoException();
 	}
 	
-	public void alterarPonto(String nomeP, String novonomeP, int tipo) throws PontoNaoEncontradoException{
+	public void alterarPonto(String nomeP, String novonomeP, int tipo) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, ConflitoException{
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
 		Ponto ponto = null;
-		
+		Ponto aux = null;
 		while(iterador.temProximo()){
 			ponto = (Ponto) iterador.obterProximo();
 			if(ponto.getNome().equals(nomeP)){
@@ -56,8 +56,16 @@ public class AdministradorController {
 		if(ponto == null){
 			throw new PontoNaoEncontradoException();
 		}
-		ponto.setNome(novonomeP);
-		ponto.setTipo(tipo);
+		try {
+			aux = recuperarPonto(novonomeP);
+		} catch (PontoNaoEncontradoException e) {
+			ponto.setNome(novonomeP);
+			ponto.setTipo(tipo);
+		}
+		if(aux != null){
+			throw new ConflitoException();
+		}
+		
 	}
 	
 	public Ponto removerPonto(String nomeP) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, ArestaNaoEncontradoException, PontoNuloException{
