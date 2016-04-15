@@ -52,9 +52,9 @@ public class MeuIterador implements Iterador {//Meu iterador implementa a interf
 	 * Metodo para retornar celula atuala e passar pra proxima
 	 */
 	public Object obterProximo() {
-		Celula aux2 = auxiliar;//aux2 copia a célula atual
+		Object objetoRecebido=auxiliar.getObjeto();//objeto recebido pega o objeto da celula atual
 		auxiliar=auxiliar.getProximo();//celula atual passa pra proxima
-		return aux2;//retorna aux2
+		return objetoRecebido;//retorna o objeto que foi recebido
 	}
 	/**
 	 * metodo para fazer com que o iterador retorne para o inicio da lista

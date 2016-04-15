@@ -15,10 +15,12 @@ public class PontosTest {
 	public void cadastrarPontoSucesso(){
 		Ponto a = new Ponto("A", 1);
 		Ponto b = new Ponto("B", 1);
+		Ponto a1 = null;
+		Ponto b1 = null;
 		
 		try{
-			Ponto b1 = controller.cadastrarPonto(b);
-			Ponto a1 = controller.cadastrarPonto(a);
+			b1 = controller.cadastrarPonto(b);
+			a1 = controller.cadastrarPonto(a);
 		}catch(PontoNuloException e){
 			fail();
 		} catch (CampoObrigatorioInexistenteException e) {
@@ -27,6 +29,25 @@ public class PontosTest {
 			fail();
 		}
 		
+		assertEquals(a, a1);
+		assertEquals(b, b1);
+	}
+	
+	@Test
+	public void cadastrarPontoIgual(){
+		Ponto a = new Ponto("A", 1);
+		Ponto b = new Ponto("A", 1);
+		
+		try{
+			controller.cadastrarPonto(b);
+			controller.cadastrarPonto(a);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			assertTrue(true);
+		}
 		
 	}
 }
