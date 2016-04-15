@@ -135,12 +135,12 @@ public class AdministradorController {
 	}
 		
 	
-	public Aresta cadastrarAresta(String nomeOrigem, int distancia, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
+	public Aresta cadastrarAresta(String nomeOrigem, int tempo, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
 		Ponto origem = null;
 		Ponto destino = null;
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
 		
-		if(nomeOrigem.trim().isEmpty() || nomeDestino.trim().isEmpty() || distancia<1){
+		if(nomeOrigem.trim().isEmpty() || nomeDestino.trim().isEmpty() || tempo<1){
 			throw new CampoObrigatorioInexistenteException();
 		}
 		while(iterador.temProximo()){
@@ -180,11 +180,11 @@ public class AdministradorController {
 		
 		
 		Lista arestas = origem.getArestas();
-		Aresta arestaO = new Aresta(destino, distancia);
+		Aresta arestaO = new Aresta(destino, tempo);
 		arestas.inserirInicio(arestaO);
 		
 		arestas = destino.getArestas();
-		Aresta arestaD = new Aresta(origem, distancia);
+		Aresta arestaD = new Aresta(origem, tempo);
 		arestas.inserirInicio(arestaD);
 		
 		return arestaO;

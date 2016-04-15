@@ -2,11 +2,11 @@ package br.uefs.ecomp.rotasMonster.util;
 
 public class Aresta {
 	private Ponto pontoDestino;
-	private int distancia = 0;
+	private int tempo = 0;
 	
-	public Aresta(Ponto pontoDest, int distancia){
+	public Aresta(Ponto pontoDest, int tempo){
 		this.pontoDestino = pontoDest;
-		this.distancia = distancia;
+		this.tempo = tempo;
 	}
 	
 	/**
@@ -22,15 +22,15 @@ public class Aresta {
 		this.pontoDestino = pontoDestino;
 	}
 	/**
-	 * @return the distancia
+	 * @return the tempo
 	 */
-	public int getDistancia() {
-		return distancia;
+	public int gettempo() {
+		return tempo;
 	}
 	/**
-	 * @param distancia the distancia to set
+	 * @param tempo the tempo to set
 	 */
-	public void setDistancia(int distancia) {
-		this.distancia = distancia;
+	public void settempo(int tempo) {
+		this.tempo = tempo;
 	}
 }
