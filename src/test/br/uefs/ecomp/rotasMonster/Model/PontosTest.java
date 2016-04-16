@@ -476,4 +476,129 @@ public class PontosTest {
 		
 		assertEquals(2, contadorAresta);
 	}
+	
+	@Test
+	public void removerPontoSucesso3(){
+		Ponto a = new Ponto("A", 1);
+		Ponto b = new Ponto("B", 1);
+		Ponto c = new Ponto("C", 1);
+		
+		try{
+			controller.cadastrarPonto(b);
+			controller.cadastrarPonto(a);
+			controller.cadastrarPonto(c);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("A", 10, "B");
+			controller.cadastrarAresta("A", 20, "C");
+			controller.cadastrarAresta("B", 20, "C");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		int contadorAresta = 0;
+		MeuIterador iterador = null;
+		try {
+			iterador = controller.listarArestas("A");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contadorAresta++;
+		}
+		
+		try {
+			iterador = controller.listarArestas("B");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contadorAresta++;
+		}
+		
+		try {
+			iterador = controller.listarArestas("C");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contadorAresta++;
+		}
+		
+		assertEquals(6, contadorAresta);
+		
+		try {
+			controller.removeAresta(a, b);
+		} catch (ArestaNaoEncontradoException e) {
+			fail();
+		} catch (PontoNuloException e) {
+			fail();
+		}
+		
+		
+		contadorAresta = 0;
+		
+		try {
+			iterador = controller.listarArestas("A");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contadorAresta++;
+		}
+		
+		try {
+			iterador = controller.listarArestas("B");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contadorAresta++;
+		}
+		
+		try {
+			iterador = controller.listarArestas("C");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contadorAresta++;
+		}
+		
+		assertEquals(4, contadorAresta);
+	}
 }
