@@ -29,6 +29,14 @@ public class PontosTest {
 			fail();
 		}
 		
+		int contador = 0;
+		MeuIterador iterador = controller.listarPontos();
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contador++;
+		}
+		
+		assertEquals(2, contador);
 		assertEquals(a, a1);
 		assertEquals(b, b1);
 	}
@@ -48,6 +56,15 @@ public class PontosTest {
 		} catch (ConflitoException e) {
 			assertTrue(true);
 		}
+		
+		int contador = 0;
+		MeuIterador iterador = controller.listarPontos();
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contador++;
+		}
+		
+		assertEquals(1, contador);
 		
 	}
 	
@@ -74,7 +91,16 @@ public class PontosTest {
 			assertTrue(true);
 		} catch (ConflitoException e) {
 			fail();
-		}	
+		}
+		
+		int contador = 0;
+		MeuIterador iterador = controller.listarPontos();
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contador++;
+		}
+		
+		assertEquals(0, contador);
 	}
 	
 	@Test

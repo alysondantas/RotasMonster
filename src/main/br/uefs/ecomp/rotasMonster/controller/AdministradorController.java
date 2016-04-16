@@ -27,6 +27,10 @@ public class AdministradorController {
 		return p;
 	}
 	
+	public MeuIterador listarPontos(){
+		return (MeuIterador) grafo.iterador();
+	}
+	
 	public Ponto recuperarPonto(String nomeP) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException {
 		Ponto ponto;
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
@@ -138,25 +142,33 @@ public class AdministradorController {
 	public Aresta cadastrarAresta(String nomeOrigem, int tempo, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
 		Ponto origem = null;
 		Ponto destino = null;
+		boolean pontoNaoEncontrado = true;
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
 		
 		if(nomeOrigem.trim().isEmpty() || nomeDestino.trim().isEmpty() || tempo<1){
 			throw new CampoObrigatorioInexistenteException();
 		}
+		
 		while(iterador.temProximo()){
 			origem = (Ponto) iterador.obterProximo();
 			if(origem.getNome().equals(nomeOrigem)){
+				pontoNaoEncontrado = false;
 				break;
 			}
 		}
+		
+		pontoNaoEncontrado = true;
+		
 		iterador.reiniciar();
 		while(iterador.temProximo()){
 			destino = (Ponto) iterador.obterProximo();
 			if(destino.getNome().equals(nomeDestino)){
+				pontoNaoEncontrado = false;
 				break;
 			}
 		}
-		if(origem == null || destino == null){
+		
+		if(pontoNaoEncontrado == true){
 			throw new PontoNaoEncontradoException();
 		}
 		
@@ -190,5 +202,10 @@ public class AdministradorController {
 		return arestaO;
 	}
 	
+	public MeuIterador listarArestas(String nome) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException{
+		Ponto p = recuperarPonto(nome);
+		Lista arestas = p.getArestas();
+		return (MeuIterador) arestas.iterador();
+	}
 	
 }
