@@ -98,9 +98,9 @@ public class CadastroAresta extends JFrame {
 		String nomeDestino = textPDestino.getText();
 		String tempoS = textTempo.getText();
 		
-		int tempo = 0;
+		double tempo = 0;
 		try {
-			tempo = Integer.parseInt(tempoS);
+			tempo = Double.parseDouble(tempoS);
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Apenas numeros!");
 		}

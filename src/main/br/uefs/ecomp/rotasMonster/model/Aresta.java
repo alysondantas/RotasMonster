@@ -2,9 +2,9 @@ package br.uefs.ecomp.rotasMonster.model;
 
 public class Aresta {
 	private Ponto pontoDestino;
-	private int tempo = 0;
+	private double tempo = 0;
 	
-	public Aresta(Ponto pontoDest, int tempo){
+	public Aresta(Ponto pontoDest, double tempo){
 		this.pontoDestino = pontoDest;
 		this.tempo = tempo;
 	}
@@ -24,13 +24,13 @@ public class Aresta {
 	/**
 	 * @return the tempo
 	 */
-	public int gettempo() {
+	public double gettempo() {
 		return tempo;
 	}
 	/**
 	 * @param tempo the tempo to set
 	 */
-	public void settempo(int tempo) {
+	public void settempo(double tempo) {
 		this.tempo = tempo;
 	}
 }

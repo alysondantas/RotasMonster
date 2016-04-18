@@ -144,7 +144,7 @@ public class AdministradorController {
 	}
 		
 	
-	public Aresta cadastrarAresta(String nomeOrigem, int tempo, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
+	public Aresta cadastrarAresta(String nomeOrigem, double tempo, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
 		Ponto origem = null;
 		Ponto destino = null;
 		boolean pontoNaoEncontrado = true;
