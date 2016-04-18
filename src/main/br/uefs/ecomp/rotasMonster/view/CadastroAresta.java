@@ -16,7 +16,7 @@ import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
 import br.uefs.ecomp.rotasMonster.exceptions.ConflitoException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
-import br.uefs.ecomp.rotasMonster.util.Aresta;
+import br.uefs.ecomp.rotasMonster.model.Aresta;
 
 public class CadastroAresta extends JFrame {
 

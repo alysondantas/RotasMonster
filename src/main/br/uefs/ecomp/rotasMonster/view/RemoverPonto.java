@@ -12,7 +12,7 @@ import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNuloException;
-import br.uefs.ecomp.rotasMonster.util.Ponto;
+import br.uefs.ecomp.rotasMonster.model.Ponto;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;

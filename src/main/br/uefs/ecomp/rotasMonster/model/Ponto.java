@@ -1,4 +1,6 @@
-package br.uefs.ecomp.rotasMonster.util;
+package br.uefs.ecomp.rotasMonster.model;
+
+import br.uefs.ecomp.rotasMonster.util.Lista;
 
 public class Ponto {
 	private String nome;

@@ -12,8 +12,8 @@ import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNuloException;
-import br.uefs.ecomp.rotasMonster.util.Aresta;
-import br.uefs.ecomp.rotasMonster.util.Ponto;
+import br.uefs.ecomp.rotasMonster.model.Aresta;
+import br.uefs.ecomp.rotasMonster.model.Ponto;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

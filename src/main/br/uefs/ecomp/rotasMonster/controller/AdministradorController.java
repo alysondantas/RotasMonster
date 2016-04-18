@@ -2,6 +2,9 @@ package br.uefs.ecomp.rotasMonster.controller;
 
 import br.uefs.ecomp.rotasMonster.util.*;
 import br.uefs.ecomp.rotasMonster.exceptions.*;
+import br.uefs.ecomp.rotasMonster.model.Aresta;
+import br.uefs.ecomp.rotasMonster.model.Grafo;
+import br.uefs.ecomp.rotasMonster.model.Ponto;
 
 public class AdministradorController {
 	Grafo grafo = new Grafo();

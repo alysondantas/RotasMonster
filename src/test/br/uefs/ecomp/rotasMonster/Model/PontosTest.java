@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import br.uefs.ecomp.rotasMonster.controller.*;
 import br.uefs.ecomp.rotasMonster.exceptions.*;
+import br.uefs.ecomp.rotasMonster.model.Ponto;
 import br.uefs.ecomp.rotasMonster.util.*;
 
 public class PontosTest {

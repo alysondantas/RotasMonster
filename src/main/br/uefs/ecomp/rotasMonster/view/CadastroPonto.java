@@ -18,7 +18,7 @@ import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
 import br.uefs.ecomp.rotasMonster.exceptions.ConflitoException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNuloException;
-import br.uefs.ecomp.rotasMonster.util.Ponto;
+import br.uefs.ecomp.rotasMonster.model.Ponto;
 
 public class CadastroPonto extends JFrame {
 

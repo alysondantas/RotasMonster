@@ -1,4 +1,4 @@
-package br.uefs.ecomp.rotasMonster.util;
+package br.uefs.ecomp.rotasMonster.model;
 
 public class Aresta {
 	private Ponto pontoDestino;
