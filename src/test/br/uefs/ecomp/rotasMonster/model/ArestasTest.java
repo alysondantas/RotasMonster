@@ -1,4 +1,4 @@
-package br.uefs.ecomp.rotasMonster.Model;
+package br.uefs.ecomp.rotasMonster.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
