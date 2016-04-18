@@ -14,6 +14,8 @@ public class AdministradorController {
 			throw new PontoNuloException();
 		}else if(p.getTipo() == 0 || p.getNome().trim().isEmpty()){
 			throw new CampoObrigatorioInexistenteException();
+		}else if(p.getCoordX() == -1 || p.getCoordY() == -1){
+			throw new CampoObrigatorioInexistenteException();
 		}
 		Ponto aux = null;
 		try {

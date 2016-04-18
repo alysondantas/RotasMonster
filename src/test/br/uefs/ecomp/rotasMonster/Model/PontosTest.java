@@ -13,8 +13,8 @@ public class PontosTest {
 	
 	@Test
 	public void cadastrarPontoSucesso(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		Ponto a1 = null;
 		Ponto b1 = null;
 		
@@ -43,8 +43,8 @@ public class PontosTest {
 	
 	@Test
 	public void cadastrarPontoIgual(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("A", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("A", 1, 14, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -70,8 +70,8 @@ public class PontosTest {
 	
 	@Test
 	public void cadastrarPontoSemNome(){
-		Ponto a = new Ponto("", 1);
-		Ponto b = new Ponto("    ", 1);
+		Ponto a = new Ponto("", 1, 13, 23);
+		Ponto b = new Ponto("    ", 1, 13, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -105,7 +105,7 @@ public class PontosTest {
 	
 	@Test
 	public void alterarPontoSucesso(){
-		Ponto a = new Ponto("A", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
 		Ponto a1 = null;
 		
 		try{
@@ -141,8 +141,8 @@ public class PontosTest {
 	
 	@Test
 	public void alterarPontoNomeExistente(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		Ponto a1 = null;
 		
 		try{
@@ -188,8 +188,8 @@ public class PontosTest {
 	
 	@Test
 	public void alterarPontoSemNome(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		Ponto a1 = null;
 		
 		try{
@@ -262,8 +262,8 @@ public class PontosTest {
 	
 	@Test
 	public void removerPontoSucesso1(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -355,9 +355,9 @@ public class PontosTest {
 	
 	@Test
 	public void removerPontoSucesso2(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
-		Ponto c = new Ponto("C", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
+		Ponto c = new Ponto("C", 1, 15, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -479,9 +479,9 @@ public class PontosTest {
 	
 	@Test
 	public void removerPontoSucesso3(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
-		Ponto c = new Ponto("C", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
+		Ponto c = new Ponto("C", 1, 15, 23);
 		
 		try{
 			controller.cadastrarPonto(b);

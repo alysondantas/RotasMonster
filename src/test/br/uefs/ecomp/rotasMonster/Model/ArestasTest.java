@@ -15,8 +15,8 @@ public class ArestasTest {
 	
 	@Test
 	public void cadastrarArestaSucesso(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -78,7 +78,7 @@ public class ArestasTest {
 	
 	@Test
 	public void cadastrarArestaSemOrigem(){
-		Ponto b = new Ponto("B", 1);
+		Ponto b = new Ponto("B", 1, 13, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -127,7 +127,7 @@ public class ArestasTest {
 	
 	@Test
 	public void cadastrarArestaSemDestino(){
-		Ponto a = new Ponto("A", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
 		
 		try{
 			controller.cadastrarPonto(a);
@@ -200,7 +200,7 @@ public class ArestasTest {
 	
 	@Test
 	public void cadastrarArestaPontoInexistente(){
-		Ponto a = new Ponto("A", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
 		
 		try{
 			controller.cadastrarPonto(a);
@@ -248,8 +248,8 @@ public class ArestasTest {
 	
 	@Test
 	public void removerArestaSucesso(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -320,9 +320,9 @@ public class ArestasTest {
 	
 	@Test
 	public void removerArestaInexistente(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
-		Ponto c = new Ponto("C", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
+		Ponto c = new Ponto("C", 1, 13, 25);
 		
 		try{
 			controller.cadastrarPonto(b);
@@ -393,8 +393,8 @@ public class ArestasTest {
 	
 	@Test
 	public void removerArestaNulo(){
-		Ponto a = new Ponto("A", 1);
-		Ponto b = new Ponto("B", 1);
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
 		Ponto c = null;
 		
 		try{
