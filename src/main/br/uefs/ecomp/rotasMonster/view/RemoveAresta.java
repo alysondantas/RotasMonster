@@ -51,7 +51,7 @@ public class RemoveAresta extends JFrame {
 	 */
 	public RemoveAresta() {
 		setTitle("R.Aresta");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 210, 205);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -115,6 +115,12 @@ public class RemoveAresta extends JFrame {
 				JOptionPane.showMessageDialog(null, "Erro aresta não encontrado!");
 			} catch (PontoNuloException e) {
 				JOptionPane.showMessageDialog(null, "Erro interno!");
+			}
+			if(a != null){
+				JOptionPane.showMessageDialog(null, "Aresta removida!");
+				this.dispose();
+			}else{
+				JOptionPane.showMessageDialog(null, "Erro Aresta não removida!");
 			}
 		}else{
 			JOptionPane.showMessageDialog(null, "Erro Aresta não removida!");
