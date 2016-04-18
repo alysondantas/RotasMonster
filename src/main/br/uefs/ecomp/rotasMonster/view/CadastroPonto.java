@@ -52,7 +52,7 @@ public class CadastroPonto extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroPonto() {
-		setTitle("Cadastro de Ponto");
+		setTitle("Pontos");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 224, 300);

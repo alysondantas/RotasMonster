@@ -58,6 +58,13 @@ public class GUI {
 		frame.getContentPane().add(btnPonto);
 		
 		JButton btnAresta = new JButton("Aresta");
+		btnAresta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CadastroAresta cadastroAresta = new CadastroAresta();
+				cadastroAresta.janelaCadastro(controller);
+			}
+		});
 		btnAresta.setBounds(10, 67, 89, 23);
 		frame.getContentPane().add(btnAresta);
 		
