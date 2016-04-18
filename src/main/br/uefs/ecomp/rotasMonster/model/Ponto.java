@@ -8,6 +8,7 @@ public class Ponto {
 	private Lista arestas;
 	private int coordX = -1;
 	private int coordY = -1;
+	private boolean passou = false;
 	
 	public Ponto(String nome, int tipo, int x, int y){
 		this.nome = nome;
@@ -74,5 +75,13 @@ public class Ponto {
 
 	public void setCoordY(int coordY) {
 		this.coordY = coordY;
+	}
+
+	public boolean isPassou() {
+		return passou;
+	}
+
+	public void setPassou(boolean passou) {
+		this.passou = passou;
 	}
 }
