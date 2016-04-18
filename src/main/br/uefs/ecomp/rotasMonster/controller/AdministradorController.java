@@ -150,7 +150,7 @@ public class AdministradorController {
 		boolean pontoNaoEncontrado = true;
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
 		
-		if(nomeOrigem.trim().isEmpty() || nomeDestino.trim().isEmpty() || tempo<1){
+		if(nomeOrigem.trim().isEmpty() || nomeDestino.trim().isEmpty() || tempo<0.1){
 			throw new CampoObrigatorioInexistenteException();
 		}
 		
