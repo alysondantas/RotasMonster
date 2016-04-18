@@ -7,8 +7,16 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
+import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
+import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
+import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
+import br.uefs.ecomp.rotasMonster.model.Grafo;
+import br.uefs.ecomp.rotasMonster.model.Ponto;
+import br.uefs.ecomp.rotasMonster.util.PrimDijkstra;
+
 import javax.swing.JComboBox;
 
 public class GUI {
@@ -120,6 +128,35 @@ public class GUI {
 		frmRotasmonster.getContentPane().add(comboBox_1);
 		
 		JButton btnCalcular = new JButton("Calcular");
+		btnCalcular.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Ponto po = null;
+				try {
+					po=controller.recuperarPonto("a");
+				} catch (PontoNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
+				} catch (CampoObrigatorioInexistenteException e) {
+					JOptionPane.showMessageDialog(null, "Preenche burro!");
+				}
+				Ponto pd = null;
+				try {
+					pd=controller.recuperarPonto("c");
+				} catch (PontoNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
+				} catch (CampoObrigatorioInexistenteException e) {
+					JOptionPane.showMessageDialog(null, "Preenche burro!");
+				}
+				Grafo g = controller.getGrafo();
+				PrimDijkstra prim = new PrimDijkstra(g,po,pd);
+				try {
+					prim.rodarPrim();
+				} catch (ArestaNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Aresta não encontrado interno!");
+				}
+				
+			}
+		});
 		btnCalcular.setBounds(10, 327, 89, 23);
 		frmRotasmonster.getContentPane().add(btnCalcular);
 	}

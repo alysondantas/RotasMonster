@@ -12,6 +12,10 @@ public class AdministradorController {
 		
 	}
 	
+	public Grafo getGrafo(){
+		return grafo;
+	}
+	
 	public Ponto cadastrarPonto(Ponto p) throws PontoNuloException, CampoObrigatorioInexistenteException, ConflitoException{
 		if(p==null){
 			throw new PontoNuloException();
