@@ -89,6 +89,13 @@ public class GUI {
 		frmRotasmonster.getContentPane().add(btnPonto_1);
 		
 		JButton btnAresta_1 = new JButton("Aresta");
+		btnAresta_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				RemoveAresta removearesta = new RemoveAresta();
+				removearesta.janelaRemove(controller);
+			}
+		});
 		btnAresta_1.setBounds(10, 160, 89, 23);
 		frmRotasmonster.getContentPane().add(btnAresta_1);
 		
