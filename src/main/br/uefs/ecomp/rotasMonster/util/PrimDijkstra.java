@@ -22,6 +22,7 @@ public class PrimDijkstra {
 		if(listaArestas == null){
 			throw new ArestaNaoEncontradoException();
 		}
+		
 		int tamanho = grafo.obterTamanho();
 		Ponto aux = inicio;
 		Ponto auxD = null;
@@ -34,7 +35,7 @@ public class PrimDijkstra {
 		int contaux = 0;
 		boolean japassou = true;
 		
-		while(contador<tamanho){
+		while(contador!=tamanho){
 			listaArestas = aux.getArestas();
 			iterador = (MeuIterador) listaArestas.iterador();
 			while(iterador.temProximo()){
@@ -60,6 +61,10 @@ public class PrimDijkstra {
 			if(aux.isPassou() == false){
 				aux.setPassou(true);
 				contador++;
+				System.out.println(contador);
+			}
+			if(contador==tamanho){
+				break;
 			}
 			caminho = caminho + aux.getNome() + "-" + auxD.getNome() + "/";
 			System.out.println(caminho);
