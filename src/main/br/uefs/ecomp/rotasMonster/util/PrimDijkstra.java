@@ -24,17 +24,17 @@ public class PrimDijkstra {
 		}
 		int tamanho = grafo.obterTamanho();
 		Ponto aux = inicio;
-		Ponto auxD;
-		int contador = 1;
+		Ponto auxD = null;
+		int contador = 0;
 		String caminho = ": ";
-		MeuIterador iterador;
-		Aresta aresta;
+		MeuIterador iterador = null;
+		Aresta aresta = null;
 		Aresta arestaaux = null;
 		Aresta arestaaux2 = null;
 		int contaux = 0;
 		boolean japassou = true;
 		
-		while(contador<tamanho){//avaliar o bom funcionamento disso se é < ou != se começa de 1 ou de 0
+		while(contador<tamanho){
 			listaArestas = aux.getArestas();
 			iterador = (MeuIterador) listaArestas.iterador();
 			while(iterador.temProximo()){
