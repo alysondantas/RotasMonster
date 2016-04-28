@@ -15,7 +15,7 @@ import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteExceptio
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Grafo;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
-import br.uefs.ecomp.rotasMonster.util.PrimDijkstra;
+import br.uefs.ecomp.rotasMonster.util.*;
 
 import javax.swing.JComboBox;
 
@@ -148,12 +148,7 @@ public class GUI {
 					JOptionPane.showMessageDialog(null, "Preenche burro!");
 				}
 				Grafo g = controller.getGrafo();
-				PrimDijkstra prim = new PrimDijkstra(g,po,pd);
-				try {
-					prim.rodarPrim();
-				} catch (ArestaNaoEncontradoException e) {
-					JOptionPane.showMessageDialog(null, "Aresta não encontrado interno!");
-				}
+
 				
 			}
 		});
