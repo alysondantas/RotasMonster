@@ -14,6 +14,7 @@ import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
 import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
+import br.uefs.ecomp.rotasMonster.model.Distancia;
 import br.uefs.ecomp.rotasMonster.model.Grafo;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
 import br.uefs.ecomp.rotasMonster.util.*;
@@ -156,14 +157,25 @@ public class GUI {
 					JOptionPane.showMessageDialog(null, "Grafo nulo!");
 				}
 				
-				double distancia = -3;
+				double tempo = -3;
+				Distancia distancia = null;
 				try {
 					distancia = dij.iniciaDijkstra(po, pd);
 				} catch (PontoNaoEncontradoException e) {
 					JOptionPane.showMessageDialog(null, "Ponto não encontrado no Dijkstra!");
 				}
-				System.out.println(distancia);
-				JOptionPane.showMessageDialog(null, distancia);
+				tempo = distancia.getTempo();
+				
+				System.out.println(tempo);
+				JOptionPane.showMessageDialog(null, tempo);
+				MeuIterador iterador;
+				Lista list = distancia.getPontos();
+				iterador = (MeuIterador) list.iterador();
+				Ponto p;
+				while(iterador.temProximo()){
+					p = (Ponto) iterador.obterProximo();
+					System.out.println(p.getNome());
+				}
 				
 			}
 		});

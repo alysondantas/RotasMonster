@@ -26,7 +26,7 @@ public class Dijkstra {
 		this.g= g;
 	}
 	
-	public double iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
+	public Distancia iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
 		Ponto auxP;
 		Aresta auxA;
 		Ponto auxdestino = null;
@@ -101,7 +101,7 @@ public class Dijkstra {
 		}
 		iterador = (MeuIterador) distancia.iterador();
 		
-		tamanho = -2;
+		tamanho = -1;
 		caminho = null;
 		
 		while(iterador.temProximo()){
@@ -112,10 +112,10 @@ public class Dijkstra {
 				break;
 			}
 		}
-		if(tamanho == -2 || caminho == null){
-			return -1;
+		if(tamanho == -1 || caminho == null){
+			return null;
 		}else{
-			return tamanho;
+			return auxD;
 		}
 
 	}
