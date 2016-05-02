@@ -2,9 +2,8 @@ package br.uefs.ecomp.rotasMonster.controller;
 
 import br.uefs.ecomp.rotasMonster.util.*;
 import br.uefs.ecomp.rotasMonster.exceptions.*;
-import br.uefs.ecomp.rotasMonster.model.Aresta;
-import br.uefs.ecomp.rotasMonster.model.Grafo;
-import br.uefs.ecomp.rotasMonster.model.Ponto;
+import br.uefs.ecomp.rotasMonster.model.*;
+
 
 public class AdministradorController {
 	Grafo grafo = new Grafo();
@@ -215,6 +214,22 @@ public class AdministradorController {
 		Ponto p = recuperarPonto(nome);
 		Lista arestas = p.getArestas();
 		return (MeuIterador) arestas.iterador();
+	}
+	
+	public Caminho realizaDijkstra(String sOrigem, String sColeta, String sDestino) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, GrafoNuloException{
+		Ponto origem = recuperarPonto(sOrigem);
+		Ponto coleta = recuperarPonto(sColeta);
+		Ponto destino = recuperarPonto(sDestino);
+		
+		Dijkstra djkOC = new Dijkstra(grafo);
+		Dijkstra djkCD = new Dijkstra(grafo);
+		
+		Distancia caminhoOC = djkOC.iniciaDijkstra(origem, coleta);
+		Distancia caminhoCD = djkCD.iniciaDijkstra(coleta, destino);
+		
+		Caminho caminho = new Caminho(caminhoOC, caminhoCD);
+		
+		return caminho;
 	}
 	
 }

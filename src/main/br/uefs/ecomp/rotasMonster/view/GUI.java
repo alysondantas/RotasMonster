@@ -15,6 +15,7 @@ import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteExceptio
 import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Distancia;
+import br.uefs.ecomp.rotasMonster.model.DoisPontos;
 import br.uefs.ecomp.rotasMonster.model.Grafo;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
 import br.uefs.ecomp.rotasMonster.util.*;
@@ -171,10 +172,10 @@ public class GUI {
 				MeuIterador iterador;
 				Lista list = distancia.getPontos();
 				iterador = (MeuIterador) list.iterador();
-				Ponto p;
+				DoisPontos p;
 				while(iterador.temProximo()){
-					p = (Ponto) iterador.obterProximo();
-					System.out.println(p.getNome());
+					p = (DoisPontos) iterador.obterProximo();
+					System.out.println(p.getPontoA().getNome() + p.getPontoB().getNome());
 				}
 				
 			}

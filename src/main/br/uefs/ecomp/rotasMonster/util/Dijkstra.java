@@ -22,8 +22,13 @@ public class Dijkstra {
 		caminhoPercorrido = new Lista();
 	}
 	
-	public void setDijkstra(Grafo g){
-		this.g= g;
+	public void resetaDijkstra(Grafo g) throws GrafoNuloException{
+		if(g == null){
+			throw new GrafoNuloException();
+		}
+		this.g = g;
+		fila = new FilaPrioridade();
+		caminhoPercorrido = new Lista();
 	}
 	
 	public Distancia iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
@@ -58,7 +63,6 @@ public class Dijkstra {
 		Lista caminho;
 		double tamanhoU = 0;
 		double tamanhoA = 0;
-		MeuIterador iterador3;
 		/*
 		 * auxdestinho = v
 		 * auxP = u
@@ -142,9 +146,7 @@ public class Dijkstra {
 			
 			
 		iterador = (MeuIterador) distancia.iterador();
-		
 		tamanho = -1;
-		
 		while(iterador.temProximo()){
 			auxD = (Distancia) iterador.obterProximo();
 			if(auxD.getP().equals(destino)){
