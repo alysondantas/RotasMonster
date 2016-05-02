@@ -123,18 +123,27 @@ public class Dijkstra {
 			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
 		}
 		
+		celulinha = null;
+		
 		System.out.println();
 		iterador2 = (MeuIterador) test.iterador();
 		while(iterador2.temProximo()){
 			celulinha = (DoisPontos) iterador2.obterProximo();
 			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
 		}
+		System.out.println("Destino encontrado é: " + celulinha.getPontoB().getNome());
+			if(!celulinha.getPontoB().equals(destino)){//se o ultimo ponto não for o destino é pq o menor caminho é direto da origem para o destino
+				System.out.println("Mas ela não é o destino");
+				test = new Lista();
+				celulinha = new DoisPontos(origem, destino);
+				test.inserirInicio(celulinha);
+				System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+			}
+			
 			
 		iterador = (MeuIterador) distancia.iterador();
 		
 		tamanho = -1;
-		caminho = null;
-	
 		
 		while(iterador.temProximo()){
 			auxD = (Distancia) iterador.obterProximo();
