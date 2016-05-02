@@ -9,17 +9,15 @@ import br.uefs.ecomp.rotasMonster.model.Distancia;
 
 public class Dijkstra {
 	private Grafo g;
-	private int qtdPontos; //quantidade de pontos
+//	private int qtdPontos; //quantidade de pontos
 	private FilaPrioridade fila;
-	private Lista adj;
+//	private Lista adj;
 	
 	public Dijkstra(Grafo g) throws GrafoNuloException{
 		if(g == null){
 			throw new GrafoNuloException();
 		}
 		this.g = g;
-		qtdPontos = g.obterTamanho();
-		fila = new FilaPrioridade();
 	}
 	
 	public void setDijkstra(Grafo g){
@@ -28,6 +26,7 @@ public class Dijkstra {
 	
 	public double iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
 		Ponto auxP;
+		fila = new FilaPrioridade();
 		Aresta auxA;
 		Ponto auxdestino = null;
 		Lista arestas;
@@ -37,29 +36,14 @@ public class Dijkstra {
 		Lista distancia = new Lista();
 		Distancia ori = new Distancia(origem, 0);
 		distancia.inserirInicio(ori);
+		fila.inserir(0, origem);
 		//inserindo na fila
 		while(iterador.temProximo()){
 			auxP = (Ponto) iterador.obterProximo();
 			if(auxP != origem){
-				iterador2 = (MeuIterador) auxP.getArestas().iterador();
-				while(iterador2.temProximo()){
-					auxA = (Aresta) iterador2.obterProximo();
-					auxdestino = auxA.getPontoDestino();
-					tamanho = auxA.gettempo();
-					if(auxdestino.equals(destino)){
-						
-						break;
-					}
-				}
-				if(auxdestino == null){
 					Distancia d = new Distancia(auxP, 10000);
 					distancia.inserirInicio(d);
 					fila.inserir(10000, auxP);
-				}else{
-					Distancia d = new Distancia(auxP, tamanho);
-					fila.inserir(tamanho, auxP);
-					distancia.inserirInicio(d);
-				}
 			}
 		}
 		
