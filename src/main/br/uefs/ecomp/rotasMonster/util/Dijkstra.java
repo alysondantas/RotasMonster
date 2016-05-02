@@ -9,15 +9,17 @@ import br.uefs.ecomp.rotasMonster.model.Distancia;
 
 public class Dijkstra {
 	private Grafo g;
-//	private int qtdPontos; //quantidade de pontos
+	private int qtdPontos; //quantidade de pontos
 	private FilaPrioridade fila;
-//	private Lista adj;
+	private Lista adj;
 	
 	public Dijkstra(Grafo g) throws GrafoNuloException{
 		if(g == null){
 			throw new GrafoNuloException();
 		}
 		this.g = g;
+		qtdPontos = g.obterTamanho();
+		fila = new FilaPrioridade();
 	}
 	
 	public void setDijkstra(Grafo g){
@@ -26,7 +28,6 @@ public class Dijkstra {
 	
 	public double iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
 		Ponto auxP;
-		fila = new FilaPrioridade();
 		Aresta auxA;
 		Ponto auxdestino = null;
 		Lista arestas;

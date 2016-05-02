@@ -138,7 +138,7 @@ public class GUI {
 				} catch (PontoNaoEncontradoException e) {
 					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
 				} catch (CampoObrigatorioInexistenteException e) {
-					JOptionPane.showMessageDialog(null, "Preenche burro!");
+					JOptionPane.showMessageDialog(null, "Preenche!");
 				}
 				Ponto pd = null;
 				try {
@@ -146,7 +146,7 @@ public class GUI {
 				} catch (PontoNaoEncontradoException e) {
 					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
 				} catch (CampoObrigatorioInexistenteException e) {
-					JOptionPane.showMessageDialog(null, "Preenche burro!");
+					JOptionPane.showMessageDialog(null, "Preenche!");
 				}
 				Grafo g = controller.getGrafo();
 				Dijkstra dij = null;
