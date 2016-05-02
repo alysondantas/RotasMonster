@@ -159,12 +159,6 @@ public class DijkstraTest {
 		
 		assertEquals(6.0, caminho.getTempo(), 0);
 		
-		DoisPontos p;
-		iterador = (MeuIterador) caminho.getPontos().iterador();
-		while(iterador.temProximo()){
-			p = (DoisPontos) iterador.obterProximo();
-//			System.out.println(p.getNome());
-		}
 	}
 	
 	@Test
@@ -331,16 +325,10 @@ public class DijkstraTest {
 		
 		assertEquals(20.0, caminho.getTempo(), 0);
 		
-		DoisPontos p;
-		iterador = (MeuIterador) caminho.getPontos().iterador();
-		while(iterador.temProximo()){
-			p = (DoisPontos) iterador.obterProximo();
-//			System.out.println(p.getNome());
-		}
 	}
 	
 	@Test
-	public void calcularDijkstra3(){
+	public void calcularDijkstraAE(){
 		Ponto a = new Ponto("A", 1, 13, 23);
 		Ponto b = new Ponto("B", 1, 14, 23);
 		Ponto c = new Ponto("C", 1, 13, 23);
@@ -481,12 +469,6 @@ public class DijkstraTest {
 		
 		assertEquals(5.0, caminho.getTempo(), 0);
 		
-		DoisPontos p;
-		iterador = (MeuIterador) caminho.getPontos().iterador();
-		while(iterador.temProximo()){
-			p = (DoisPontos) iterador.obterProximo();
-//			System.out.println(p.getNome());
-		}
 	}
 	
 	@Test
@@ -624,12 +606,6 @@ public class DijkstraTest {
 		
 		assertEquals(11.0, caminho.getTempo(), 0);
 		
-		DoisPontos p;
-		iterador = (MeuIterador) caminho.getPontos().iterador();
-		while(iterador.temProximo()){
-			p = (DoisPontos) iterador.obterProximo();
-//			System.out.println(p.getNome());
-		}
 	}
 	
 	@Test
@@ -767,11 +743,130 @@ public class DijkstraTest {
 		
 		assertEquals(12.0, caminho.getTempo(), 0);
 		
-		DoisPontos p;
-		iterador = (MeuIterador) caminho.getPontos().iterador();
-		while(iterador.temProximo()){
-			p = (DoisPontos) iterador.obterProximo();
-//			System.out.println(p.getNome());
+	}
+	
+	@Test
+	public void calcularDijkstraOrigemColetaDestino(){
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
+		Ponto c = new Ponto("C", 1, 13, 23);
+		Ponto d = new Ponto("D", 1, 14, 23);
+		Ponto e1 = new Ponto("E", 1, 14, 23);
+		
+		try{
+			controller.cadastrarPonto(b);
+			controller.cadastrarPonto(a);
+			controller.cadastrarPonto(c);
+			controller.cadastrarPonto(d);
+			controller.cadastrarPonto(e1);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
 		}
+		
+		int contador = 0;
+		MeuIterador iterador = controller.listarPontos();
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contador++;
+		}
+		
+		assertEquals(5, contador);
+		
+		try {
+			controller.cadastrarAresta("A", 1, "B");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("A", 3, "D");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("A", 10, "E");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("B", 5, "C");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("C", 2, "D");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("C", 1, "E");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("D", 6, "E");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		Caminho caminho = null;
+		
+		try {
+			caminho = controller.realizarDijkstra("A", "C", "E");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (GrafoNuloException e) {
+			fail(); 
+		}
+		
+		Distancia distanciaAC = caminho.getOrigemColeta();
+		Distancia distanciaCE = caminho.getColetaDestino();
+
+		
+//		int tamanho = (int) caminho.getTempo();
+		
+//		assertEquals(6, tamanho);
+		
+//		assertEquals(6.0, caminho.getTempo(), 0);
+		
 	}
 }
