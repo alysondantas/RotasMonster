@@ -6,20 +6,20 @@ import br.uefs.ecomp.rotasMonster.model.Grafo;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
 import br.uefs.ecomp.rotasMonster.model.Aresta;
 import br.uefs.ecomp.rotasMonster.model.Distancia;
+import br.uefs.ecomp.rotasMonster.model.DoisPontos;
 
 public class Dijkstra {
 	private Grafo g;
-	private int qtdPontos; //quantidade de pontos
 	private FilaPrioridade fila;
-	private Lista adj;
+	private Lista caminhoPercorrido;
 	
 	public Dijkstra(Grafo g) throws GrafoNuloException{
 		if(g == null){
 			throw new GrafoNuloException();
 		}
 		this.g = g;
-		qtdPontos = g.obterTamanho();
 		fila = new FilaPrioridade();
+		caminhoPercorrido = new Lista();
 	}
 	
 	public void setDijkstra(Grafo g){
@@ -58,6 +58,7 @@ public class Dijkstra {
 		Lista caminho;
 		double tamanhoU = 0;
 		double tamanhoA = 0;
+		MeuIterador iterador3;
 		/*
 		 * auxdestinho = v
 		 * auxP = u
@@ -94,25 +95,57 @@ public class Dijkstra {
 						auxD.setTempo(tamanhoU+tamanhoA);
 						caminho = auxD.getPontos();
 						caminho.inserirInicio(atualP);
+						System.out.println(auxP.getNome()+ " " + auxdestino.getNome() );
 						fila.inserir(tamanhoU+tamanhoA, atualP);
+						
+						DoisPontos dois = new DoisPontos(auxP, auxdestino);
+						caminhoPercorrido.inserirInicio(dois);
 					}
 				}
 			}
 		}
+		
+		//vc não faz ideia do que é mangue!
+		System.out.println();
+		DoisPontos celulinha;
+		Ponto a = null;
+		Lista test = new Lista();
+		iterador2 = (MeuIterador) caminhoPercorrido.iterador();
+		while(iterador2.temProximo()){
+			celulinha = (DoisPontos) iterador2.obterProximo();
+			if(test.obterTamanho() == 0){
+				test.inserirInicio(celulinha);
+				a = celulinha.getPontoA();
+			}else if(celulinha.getPontoB().equals(a)){
+				a = celulinha.getPontoA();
+				test.inserirInicio(celulinha);
+			}
+			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+		}
+		
+		System.out.println();
+		iterador2 = (MeuIterador) test.iterador();
+		while(iterador2.temProximo()){
+			celulinha = (DoisPontos) iterador2.obterProximo();
+			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+		}
+			
 		iterador = (MeuIterador) distancia.iterador();
 		
 		tamanho = -1;
 		caminho = null;
+	
 		
 		while(iterador.temProximo()){
 			auxD = (Distancia) iterador.obterProximo();
 			if(auxD.getP().equals(destino)){
 				tamanho = auxD.getTempo();
-				caminho = auxD.getPontos();
+//				caminho = auxD.getPontos();
+				auxD.setPontos(test);
 				break;
 			}
 		}
-		if(tamanho == -1 || caminho == null){
+		if(tamanho == -1){
 			return null;
 		}else{
 			return auxD;
