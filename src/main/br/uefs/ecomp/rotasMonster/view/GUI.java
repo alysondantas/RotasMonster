@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
 import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
+import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Grafo;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
@@ -141,14 +142,28 @@ public class GUI {
 				}
 				Ponto pd = null;
 				try {
-					pd=controller.recuperarPonto("c");
+					pd=controller.recuperarPonto("e");
 				} catch (PontoNaoEncontradoException e) {
 					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
 				} catch (CampoObrigatorioInexistenteException e) {
 					JOptionPane.showMessageDialog(null, "Preenche burro!");
 				}
 				Grafo g = controller.getGrafo();
-
+				Dijkstra dij = null;
+				try {
+					dij = new Dijkstra(g);
+				} catch (GrafoNuloException e) {
+					JOptionPane.showMessageDialog(null, "Grafo nulo!");
+				}
+				
+				double distancia = -3;
+				try {
+					distancia = dij.iniciaDijkstra(po, pd);
+				} catch (PontoNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Ponto não encontrado no Dijkstra!");
+				}
+				System.out.println(distancia);
+				JOptionPane.showMessageDialog(null, distancia);
 				
 			}
 		});

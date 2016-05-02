@@ -26,8 +26,7 @@ public class Dijkstra {
 		this.g= g;
 	}
 	
-	public Lista iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
-		fila.inserir(0, origem);
+	public double iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
 		Ponto auxP;
 		Aresta auxA;
 		Ponto auxdestino = null;
@@ -36,27 +35,30 @@ public class Dijkstra {
 		MeuIterador iterador = (MeuIterador) g.iterador();
 		MeuIterador iterador2;
 		Lista distancia = new Lista();
+		Distancia ori = new Distancia(origem, 0);
+		distancia.inserirInicio(ori);
 		//inserindo na fila
 		while(iterador.temProximo()){
 			auxP = (Ponto) iterador.obterProximo();
 			if(auxP != origem){
 				iterador2 = (MeuIterador) auxP.getArestas().iterador();
 				while(iterador2.temProximo()){
-					auxA = (Aresta) iterador.obterProximo();
+					auxA = (Aresta) iterador2.obterProximo();
 					auxdestino = auxA.getPontoDestino();
 					tamanho = auxA.gettempo();
 					if(auxdestino.equals(destino)){
+						
 						break;
 					}
 				}
 				if(auxdestino == null){
 					Distancia d = new Distancia(auxP, 10000);
-					distancia.inserirFinal(d);
+					distancia.inserirInicio(d);
 					fila.inserir(10000, auxP);
 				}else{
 					Distancia d = new Distancia(auxP, tamanho);
 					fila.inserir(tamanho, auxP);
-					distancia.inserirFinal(d);
+					distancia.inserirInicio(d);
 				}
 			}
 		}
@@ -77,7 +79,7 @@ public class Dijkstra {
 		 * 
 		 */
 		while(!fila.estaVazia()){
-			celula = (CelulaPrioridade) fila.recuperarInicio();
+			celula = (CelulaPrioridade) fila.removerInicio();
 			auxP = (Ponto) celula.getObjeto();
 			iterador = (MeuIterador) distancia.iterador();
 			while(iterador.temProximo()){
@@ -106,12 +108,30 @@ public class Dijkstra {
 					if(tamanho > tamanhoU + tamanhoA){
 						auxD.setTempo(tamanhoU+tamanhoA);
 						caminho = auxD.getPontos();
-						caminho.inserirFinal(atualP);
+						caminho.inserirInicio(atualP);
 						fila.inserir(tamanhoU+tamanhoA, atualP);
 					}
 				}
 			}
 		}
-		return null;
+		iterador = (MeuIterador) distancia.iterador();
+		
+		tamanho = -2;
+		caminho = null;
+		
+		while(iterador.temProximo()){
+			auxD = (Distancia) iterador.obterProximo();
+			if(auxD.getP().equals(destino)){
+				tamanho = auxD.getTempo();
+				caminho = auxD.getPontos();
+				break;
+			}
+		}
+		if(tamanho == -2 || caminho == null){
+			return -1;
+		}else{
+			return tamanho;
+		}
+
 	}
 }
