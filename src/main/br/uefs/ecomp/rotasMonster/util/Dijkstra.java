@@ -32,6 +32,7 @@ public class Dijkstra {
 	}
 	
 	public Distancia iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
+		g.setPassouPontos();
 		Ponto auxP;
 		Aresta auxA;
 		Ponto auxdestino = null;
@@ -139,17 +140,18 @@ public class Dijkstra {
 			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
 		}
 		System.out.println("Destino encontrado é: " + celulinha.getPontoB().getNome());
-		System.out.println("Antes dele era:" + antescelulinha.getPontoB().getNome());
-		System.out.println("Destino é :" + destino.getNome());
+		System.out.println("Antes dele era: " + antescelulinha.getPontoB().getNome());
+		System.out.println("Destino é: " + destino.getNome());
 			if(antescelulinha.getPontoB().equals(destino)){
 				System.out.println("Removido o destino invalido");
 				test.removerFinal();
 			}else if(!celulinha.getPontoB().equals(destino)){//se o ultimo ponto não for o destino é pq o menor caminho é direto da origem para o destino
-				System.out.println("Mas ela não é o destino");
+				System.out.println("Mas o destino encontrdo não é o destino");
 				test = new Lista();
 				celulinha = new DoisPontos(origem, destino);
 				test.inserirInicio(celulinha);
 				System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+				System.out.println();
 			}
 			
 			

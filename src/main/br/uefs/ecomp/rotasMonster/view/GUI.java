@@ -21,10 +21,14 @@ import br.uefs.ecomp.rotasMonster.model.Ponto;
 import br.uefs.ecomp.rotasMonster.util.*;
 
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class GUI {
 	private JFrame frmRotasmonster;
 	private AdministradorController controller = new AdministradorController();
+	private JTextField textCalcOri;
+	private JTextField textCalcDest;
+	private JTextField textCalcColet;
 	/**
 	 * Launch the application.
 	 */
@@ -114,10 +118,6 @@ public class GUI {
 		lblCalcularRota.setBounds(10, 194, 81, 14);
 		frmRotasmonster.getContentPane().add(lblCalcularRota);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(10, 240, 89, 20);
-		frmRotasmonster.getContentPane().add(comboBox);
-		
 		JLabel lblPontoDePartida = new JLabel("Ponto de partida:");
 		lblPontoDePartida.setBounds(10, 215, 89, 14);
 		frmRotasmonster.getContentPane().add(lblPontoDePartida);
@@ -126,61 +126,44 @@ public class GUI {
 		lblPontoDeDestino.setBounds(10, 271, 89, 14);
 		frmRotasmonster.getContentPane().add(lblPontoDeDestino);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(10, 296, 89, 20);
-		frmRotasmonster.getContentPane().add(comboBox_1);
-		
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Ponto po = null;
+				String destino = textCalcDest.getText();
+				String origem = textCalcOri.getText();
+				String coleta = textCalcColet.getText();
 				try {
-					po=controller.recuperarPonto("a");
+					controller.realizarDijkstra(origem, coleta, destino);
 				} catch (PontoNaoEncontradoException e) {
-					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
+					JOptionPane.showMessageDialog(null, "Erro Ponto não encontrado!");
 				} catch (CampoObrigatorioInexistenteException e) {
-					JOptionPane.showMessageDialog(null, "Preenche!");
-				}
-				Ponto pd = null;
-				try {
-					pd=controller.recuperarPonto("e");
-				} catch (PontoNaoEncontradoException e) {
-					JOptionPane.showMessageDialog(null, "Ponto não encontrado interno!");
-				} catch (CampoObrigatorioInexistenteException e) {
-					JOptionPane.showMessageDialog(null, "Preenche!");
-				}
-				Grafo g = controller.getGrafo();
-				Dijkstra dij = null;
-				try {
-					dij = new Dijkstra(g);
+					JOptionPane.showMessageDialog(null, "Erro Campo obrigadotorio nulo!");
 				} catch (GrafoNuloException e) {
-					JOptionPane.showMessageDialog(null, "Grafo nulo!");
+					JOptionPane.showMessageDialog(null, "Erro grafo sem pontos!");
 				}
-				
-				double tempo = -3;
-				Distancia distancia = null;
-				try {
-					distancia = dij.iniciaDijkstra(po, pd);
-				} catch (PontoNaoEncontradoException e) {
-					JOptionPane.showMessageDialog(null, "Ponto não encontrado no Dijkstra!");
-				}
-				tempo = distancia.getTempo();
-				
-				System.out.println(tempo);
-				JOptionPane.showMessageDialog(null, tempo);
-				MeuIterador iterador;
-				Lista list = distancia.getPontos();
-				iterador = (MeuIterador) list.iterador();
-				DoisPontos p;
-				while(iterador.temProximo()){
-					p = (DoisPontos) iterador.obterProximo();
-					System.out.println(p.getPontoA().getNome() + p.getPontoB().getNome());
-				}
-				
 			}
 		});
 		btnCalcular.setBounds(10, 327, 89, 23);
 		frmRotasmonster.getContentPane().add(btnCalcular);
+		
+		textCalcOri = new JTextField();
+		textCalcOri.setBounds(10, 240, 86, 20);
+		frmRotasmonster.getContentPane().add(textCalcOri);
+		textCalcOri.setColumns(10);
+		
+		textCalcDest = new JTextField();
+		textCalcDest.setBounds(10, 296, 86, 20);
+		frmRotasmonster.getContentPane().add(textCalcDest);
+		textCalcDest.setColumns(10);
+		
+		textCalcColet = new JTextField();
+		textCalcColet.setBounds(126, 296, 86, 20);
+		frmRotasmonster.getContentPane().add(textCalcColet);
+		textCalcColet.setColumns(10);
+		
+		JLabel lblPontoDeColeta = new JLabel("Ponto de coleta:");
+		lblPontoDeColeta.setBounds(126, 271, 121, 14);
+		frmRotasmonster.getContentPane().add(lblPontoDeColeta);
 	}
 }
