@@ -129,14 +129,22 @@ public class Dijkstra {
 		
 		celulinha = null;
 		
+
 		System.out.println();
+		DoisPontos antescelulinha = null;
 		iterador2 = (MeuIterador) test.iterador();
 		while(iterador2.temProximo()){
+			antescelulinha = celulinha;
 			celulinha = (DoisPontos) iterador2.obterProximo();
 			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
 		}
 		System.out.println("Destino encontrado é: " + celulinha.getPontoB().getNome());
-			if(!celulinha.getPontoB().equals(destino)){//se o ultimo ponto não for o destino é pq o menor caminho é direto da origem para o destino
+		System.out.println("Antes dele era:" + antescelulinha.getPontoB().getNome());
+		System.out.println("Destino é :" + destino.getNome());
+			if(antescelulinha.getPontoB().equals(destino)){
+				System.out.println("Removido o destino invalido");
+				test.removerFinal();
+			}else if(!celulinha.getPontoB().equals(destino)){//se o ultimo ponto não for o destino é pq o menor caminho é direto da origem para o destino
 				System.out.println("Mas ela não é o destino");
 				test = new Lista();
 				celulinha = new DoisPontos(origem, destino);

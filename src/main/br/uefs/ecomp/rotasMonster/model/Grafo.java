@@ -45,5 +45,13 @@ public class Grafo implements IGrafo {
 		return pontos.iterador();
 	}
 	
+	public void setPassouPontos(){
+		MeuIterador iterador = (MeuIterador) pontos.iterador();
+		Ponto p;
+		while(iterador.temProximo()){
+			p = (Ponto) iterador.obterProximo();
+			p.setPassou(false);
+		}
+	}
 
 }

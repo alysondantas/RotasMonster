@@ -2,7 +2,7 @@ package br.uefs.ecomp.rotasMonster.model;
 
 import br.uefs.ecomp.rotasMonster.util.Lista;
 
-public class Ponto {
+public class Ponto{
 	private String nome;
 	private int tipo = 0;
 	private Lista arestas;

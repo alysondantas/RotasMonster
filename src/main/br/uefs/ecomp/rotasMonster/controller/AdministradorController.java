@@ -221,10 +221,13 @@ public class AdministradorController {
 		Ponto coleta = recuperarPonto(sColeta);
 		Ponto destino = recuperarPonto(sDestino);
 		
-		Dijkstra djkOC = new Dijkstra(grafo);
+		
 		Dijkstra djkCD = new Dijkstra(grafo);
+		Dijkstra djkOC = new Dijkstra(grafo);
+		
 		
 		Distancia caminhoOC = djkOC.iniciaDijkstra(origem, coleta);
+		grafo.setPassouPontos();
 		Distancia caminhoCD = djkCD.iniciaDijkstra(coleta, destino);
 		
 		Caminho caminho = new Caminho(caminhoOC, caminhoCD);
