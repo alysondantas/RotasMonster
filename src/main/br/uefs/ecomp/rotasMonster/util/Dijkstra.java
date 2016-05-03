@@ -118,7 +118,7 @@ public class Dijkstra {
 		iterador2 = (MeuIterador) caminhoPercorrido.iterador();
 		while(iterador2.temProximo()){
 			celulinha = (DoisPontos) iterador2.obterProximo();
-			if(test.obterTamanho() == 0){
+			if(test.obterTamanho() == 0){ // && celulinha.getPontoB().equals(destino)
 				test.inserirInicio(celulinha);
 				a = celulinha.getPontoA();
 			}else if(celulinha.getPontoB().equals(a)){
