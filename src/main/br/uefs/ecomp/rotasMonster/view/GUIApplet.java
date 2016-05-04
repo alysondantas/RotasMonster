@@ -52,6 +52,12 @@ public class GUIApplet extends JApplet{
 	    //Parte responsável pelas definições da janela
 		getContentPane().setLayout(null); //Sem layout pré-definido
 		setSize(600, 400); //Define o tamanho da janela como 600 x 400
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				showStatus("Mouse clicado em (" + arg0.getX() + ", " + arg0.getY() + "). ");
+			}
+		});
 		
 		//Parte responsável por adicionar os componentes da janela
 		
@@ -125,16 +131,17 @@ public class GUIApplet extends JApplet{
 		
 		//comboBox de Ponto de Origem
 		JComboBox<String> comboBoxOrigem = new JComboBox<String>();
-		comboBoxOrigem.addMouseListener(new MouseAdapter() {
+		comboBoxOrigem.addMouseListener(new MouseAdapter() { //ação para atualizar o ComboBox toda a vez que o usuário clicar nele
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println("oi");
-				comboBoxOrigem.removeAllItems();
-				MeuIterador itera = controller.listarPontos();
-				while(itera.temProximo()) {
+				comboBoxOrigem.removeAllItems(); //limpa o comboBox
+				MeuIterador itera = controller.listarPontos(); 
+				while(itera.temProximo()) { //itera a lista de pontos do controller
 					Ponto p = (Ponto)itera.obterProximo();
-					comboBoxOrigem.addItem(p.getNome());
+					if(p.getTipo() == 2) //caso seja um ponto de coleta
+					comboBoxOrigem.addItem(p.getNome()); //adiciona ele na comboBox
 				}
 			}
 			
@@ -160,16 +167,17 @@ public class GUIApplet extends JApplet{
 		
 		//ComboBox do ponto de Destino
 		JComboBox<String> comboBoxDestino = new JComboBox<String>();
-		comboBoxDestino.addMouseListener(new MouseAdapter() {
+		comboBoxDestino.addMouseListener(new MouseAdapter() { //ação para atualizar o ComboBox toda a vez que o usuário clicar nele
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println("oi");
-				comboBoxDestino.removeAllItems();
+				comboBoxDestino.removeAllItems(); //limpa a comboBox
 				MeuIterador itera = controller.listarPontos();
-				while(itera.temProximo()) {
+				while(itera.temProximo()) { //itera a lista de pontos do controller
 					Ponto p = (Ponto)itera.obterProximo();
-					comboBoxDestino.addItem(p.getNome());
+					if(p.getTipo() == 3) //caso seja um ponto de destino
+					comboBoxDestino.addItem(p.getNome()); //adiciona ele na comboBox
 				}
 			}
 			
