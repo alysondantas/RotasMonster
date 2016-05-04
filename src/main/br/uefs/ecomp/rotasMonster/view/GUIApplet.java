@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -31,12 +33,12 @@ public class GUIApplet extends JApplet{
 	private JPanel canvas = new JPanel();
 	private AdministradorController controller = new AdministradorController();
 
-	public GUIApplet() {
-	}
+//	public GUIApplet() {
+//	}
 
-	public void start() {
-		
-	}
+//	public void start() {
+//		
+//	}
 	
 	public void init() {
 		//Parte responsável pelo Look and Feel do programa
@@ -52,6 +54,8 @@ public class GUIApplet extends JApplet{
 		setSize(600, 400); //Define o tamanho da janela como 600 x 400
 		
 		//Parte responsável por adicionar os componentes da janela
+		
+		//botão de cadastrar ponto
 		JButton btnPonto = new JButton("Ponto");
 		btnPonto.addMouseListener(new MouseAdapter() {
 			@Override
@@ -65,6 +69,7 @@ public class GUIApplet extends JApplet{
 		btnPonto.setBounds(10, 33, 89, 23);
 		getContentPane().add(btnPonto);
 		
+		//botão de cadastrar aresta
 		JButton btnAresta = new JButton("Aresta");
 		btnAresta.addMouseListener(new MouseAdapter() {
 			@Override
@@ -78,14 +83,17 @@ public class GUIApplet extends JApplet{
 		btnAresta.setBounds(10, 61, 89, 23);
 		getContentPane().add(btnAresta);
 		
+		//Label de cadastro
 		JLabel lblCadastrar = new JLabel("Cadastrar");
 		lblCadastrar.setBounds(10, 11, 69, 14);
 		getContentPane().add(lblCadastrar);
 		
+		//Label de Remoção
 		JLabel lblRemover = new JLabel("Remover");
 		lblRemover.setBounds(10, 95, 46, 14);
 		getContentPane().add(lblRemover);
 		
+		//Botão de remover ponto
 		JButton btnPonto_1 = new JButton("Ponto");
 		btnPonto_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -100,6 +108,7 @@ public class GUIApplet extends JApplet{
 		btnPonto_1.setBounds(10, 113, 89, 23);
 		getContentPane().add(btnPonto_1);
 		
+		//botão de remover aresta
 		JButton btnAresta_1 = new JButton("Aresta");
 		btnAresta_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -114,36 +123,71 @@ public class GUIApplet extends JApplet{
 		btnAresta_1.setBounds(10, 140, 89, 23);
 		getContentPane().add(btnAresta_1);
 		
-		JComboBox comboBoxOrigem = new JComboBox();
+		//comboBox de Ponto de Origem
+		JComboBox<String> comboBoxOrigem = new JComboBox<String>();
+		comboBoxOrigem.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("oi");
+				comboBoxOrigem.removeAllItems();
+				MeuIterador itera = controller.listarPontos();
+				while(itera.temProximo()) {
+					Ponto p = (Ponto)itera.obterProximo();
+					comboBoxOrigem.addItem(p.getNome());
+				}
+			}
+			
+		});
+		
 		comboBoxOrigem.setBounds(10, 221, 89, 20);
 		getContentPane().add(comboBoxOrigem);
 		
+		//Label de Cálculo do Menor Caminho
 		JLabel lblClculoDeRota = new JLabel("C\u00E1lculo de Rota");
 		lblClculoDeRota.setBounds(10, 174, 83, 14);
 		getContentPane().add(lblClculoDeRota);
 		
+		//Label do ponto de partida
 		JLabel lblPontoDePartida = new JLabel("Ponto de Partida");
 		lblPontoDePartida.setBounds(10, 199, 89, 14);
 		getContentPane().add(lblPontoDePartida);
 		
+		//Label do ponto de destino
 		JLabel lblPontoDeDestino = new JLabel("Ponto de Destino");
 		lblPontoDeDestino.setBounds(10, 247, 89, 14);
 		getContentPane().add(lblPontoDeDestino);
 		
-		JComboBox comboBoxDestino = new JComboBox();
+		//ComboBox do ponto de Destino
+		JComboBox<String> comboBoxDestino = new JComboBox<String>();
+		comboBoxDestino.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("oi");
+				comboBoxDestino.removeAllItems();
+				MeuIterador itera = controller.listarPontos();
+				while(itera.temProximo()) {
+					Ponto p = (Ponto)itera.obterProximo();
+					comboBoxDestino.addItem(p.getNome());
+				}
+			}
+			
+		});
+		
 		comboBoxDestino.setBounds(10, 269, 89, 20);
 		getContentPane().add(comboBoxDestino);
 		
+		//Botão de calcular o menor caminho
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Ponto po = (Ponto)comboBoxOrigem.getSelectedItem();
-				String nomePo = po.getNome();
-				Ponto pd = (Ponto)comboBoxDestino.getSelectedItem();
-				String nomePd = pd.getNome();
+				String po = (String) comboBoxOrigem.getSelectedItem();
+				String pd = (String) comboBoxDestino.getSelectedItem();
 				try {
-					Caminho menor = controller.realizarDijkstra(nomePo, null, nomePd);
+					Caminho menor = controller.realizarDijkstra(po, null, pd);
+					
 				} catch (PontoNaoEncontradoException | CampoObrigatorioInexistenteException | GrafoNuloException e) {
 					e.printStackTrace();
 				}
@@ -152,17 +196,18 @@ public class GUIApplet extends JApplet{
 		btnCalcular.setBounds(10, 300, 89, 23);
 		getContentPane().add(btnCalcular);
 		
+		//Configurações do JPanel com o grafo a ser exibido
 		canvas.setBackground(Color.CYAN);
 		canvas.setBounds(115, 11, 475, 379);
 		getContentPane().add(canvas);
 		
 	}
 	
-	public void paint() {
-		
-	}
+//	public void paint() {
+//		
+//	}
 	
-	public Graphics updateCanvas() {
+	public Graphics updateCanvas() { //Método para atualizar o JPanel com o Grafo
 		System.out.println("Atualizando Canvas...");
 		Graphics2D g = (Graphics2D)canvas.getGraphics(); //Pega o Graphics atual do canvas e salva na variável g
 		
