@@ -3,6 +3,8 @@ package br.uefs.ecomp.rotasMonster.view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -162,8 +164,14 @@ public class GUIApplet extends JApplet{
 	
 	public Graphics updateCanvas() {
 		System.out.println("Atualizando Canvas...");
-		Graphics g = canvas.getGraphics(); //Pega o Graphics atual do canvas e salva na variável g
-
+		Graphics2D g = (Graphics2D)canvas.getGraphics(); //Pega o Graphics atual do canvas e salva na variável g
+		
+		//PARTE RESPONSÁVEL PELA LIMPEZA DA TELA (SUPER MANGUE)
+		g.setPaint(Color.CYAN);
+		g.fill(new Rectangle(0, 0, 475, 379));
+		g.setPaint(Color.BLACK);
+		
+		//Parte responsável pela iteração e desenho dos pontos
 		MeuIterador itP = controller.listarPontos(); //cria um iterador com a lista de pontos do controller
 		while (itP.temProximo()) { //Itera a lista de pontos
 			Ponto p = (Ponto) itP.obterProximo();
