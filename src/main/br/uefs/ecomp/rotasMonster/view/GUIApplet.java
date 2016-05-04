@@ -55,7 +55,7 @@ public class GUIApplet extends JApplet{
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				showStatus("Mouse clicado em (" + arg0.getX() + ", " + arg0.getY() + "). ");
+				showStatus("Mouse clicado em (" + (arg0.getX() - 115) + ", " + (arg0.getY() - 11) + "). ");
 			}
 		});
 		
