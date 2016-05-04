@@ -30,6 +30,8 @@ import br.uefs.ecomp.rotasMonster.util.Dijkstra;
 import br.uefs.ecomp.rotasMonster.util.MeuIterador;
 
 public class GUIApplet extends JApplet{
+	public GUIApplet() {
+	}
 	private JPanel canvas = new JPanel();
 	private AdministradorController controller = new AdministradorController();
 
@@ -140,7 +142,6 @@ public class GUIApplet extends JApplet{
 				MeuIterador itera = controller.listarPontos(); 
 				while(itera.temProximo()) { //itera a lista de pontos do controller
 					Ponto p = (Ponto)itera.obterProximo();
-					if(p.getTipo() == 2) //caso seja um ponto de coleta
 					comboBoxOrigem.addItem(p.getNome()); //adiciona ele na comboBox
 				}
 			}
@@ -186,6 +187,31 @@ public class GUIApplet extends JApplet{
 		comboBoxDestino.setBounds(10, 269, 89, 20);
 		getContentPane().add(comboBoxDestino);
 		
+		//Label do Ponto de Coleta
+		JLabel lblPontoDeColeta = new JLabel("Ponto de Coleta");
+		lblPontoDeColeta.setBounds(10, 295, 89, 14);
+		getContentPane().add(lblPontoDeColeta);
+		
+		//ComboBox do Ponto de Coleta
+		JComboBox comboBoxColeta = new JComboBox();
+		comboBoxColeta.addMouseListener(new MouseAdapter() { //ação para atualizar o ComboBox toda a vez que o usuário clicar nele
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("oi");
+				comboBoxColeta.removeAllItems(); //limpa a comboBox
+				MeuIterador itera = controller.listarPontos();
+				while(itera.temProximo()) { //itera a lista de pontos do controller
+					Ponto p = (Ponto)itera.obterProximo();
+					if(p.getTipo() == 2) //caso seja um ponto de coleta
+					comboBoxColeta.addItem(p.getNome()); //adiciona ele na comboBox
+				}
+			}
+			
+		});
+		comboBoxColeta.setBounds(10, 317, 89, 20);
+		getContentPane().add(comboBoxColeta);
+		
 		//Botão de calcular o menor caminho
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.addMouseListener(new MouseAdapter() {
@@ -193,21 +219,27 @@ public class GUIApplet extends JApplet{
 			public void mouseClicked(MouseEvent arg0) {
 				String po = (String) comboBoxOrigem.getSelectedItem();
 				String pd = (String) comboBoxDestino.getSelectedItem();
+				String pc = (String) comboBoxColeta.getSelectedItem();
 				try {
-					Caminho menor = controller.realizarDijkstra(po, null, pd);
-					
-				} catch (PontoNaoEncontradoException | CampoObrigatorioInexistenteException | GrafoNuloException e) {
-					e.printStackTrace();
+					Caminho menor = controller.realizarDijkstra(po, pc, pd);
+				} catch (PontoNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Não foi possível encontrar o ponto especificado");
+				} catch (CampoObrigatorioInexistenteException e) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório não preechido");
+				} catch (GrafoNuloException e) {
+					JOptionPane.showMessageDialog(null, "Grafo Nulo");
 				}
+
 			}
 		});
-		btnCalcular.setBounds(10, 300, 89, 23);
+		btnCalcular.setBounds(10, 352, 89, 23);
 		getContentPane().add(btnCalcular);
 		
 		//Configurações do JPanel com o grafo a ser exibido
 		canvas.setBackground(Color.CYAN);
 		canvas.setBounds(115, 11, 475, 379);
 		getContentPane().add(canvas);
+		
 		
 	}
 	
@@ -243,6 +275,5 @@ public class GUIApplet extends JApplet{
 		return g; //retorna g atualizado
 		
 	}
-
 }
 
