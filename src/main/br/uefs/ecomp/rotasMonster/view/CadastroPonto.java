@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,7 +21,7 @@ import br.uefs.ecomp.rotasMonster.exceptions.ConflitoException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNuloException;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
 
-public class CadastroPonto extends JFrame {
+public class CadastroPonto extends JDialog {
 
 	private JPanel contentPane;
 	private static AdministradorController controller;
