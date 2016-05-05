@@ -24,9 +24,11 @@ import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Aresta;
 import br.uefs.ecomp.rotasMonster.model.Caminho;
+import br.uefs.ecomp.rotasMonster.model.DoisPontos;
 import br.uefs.ecomp.rotasMonster.model.Grafo;
 import br.uefs.ecomp.rotasMonster.model.Ponto;
 import br.uefs.ecomp.rotasMonster.util.Dijkstra;
+import br.uefs.ecomp.rotasMonster.util.Lista;
 import br.uefs.ecomp.rotasMonster.util.MeuIterador;
 
 public class GUIApplet extends JApplet{
@@ -34,6 +36,7 @@ public class GUIApplet extends JApplet{
 	}
 	private JPanel canvas = new JPanel();
 	private AdministradorController controller = new AdministradorController();
+	private Caminho menor;
 
 //	public GUIApplet() {
 //	}
@@ -221,7 +224,8 @@ public class GUIApplet extends JApplet{
 				String pd = (String) comboBoxDestino.getSelectedItem();
 				String pc = (String) comboBoxColeta.getSelectedItem();
 				try {
-					Caminho menor = controller.realizarDijkstra(po, pc, pd);
+					menor = controller.realizarDijkstra(po, pc, pd);
+					canvas.paintComponents(desenharCaminho());
 				} catch (PontoNaoEncontradoException e) {
 					JOptionPane.showMessageDialog(null, "Não foi possível encontrar o ponto especificado");
 				} catch (CampoObrigatorioInexistenteException e) {
@@ -236,7 +240,7 @@ public class GUIApplet extends JApplet{
 		getContentPane().add(btnCalcular);
 		
 		//Configurações do JPanel com o grafo a ser exibido
-		canvas.setBackground(Color.CYAN);
+		canvas.setBackground(Color.BLACK);
 		canvas.setBounds(115, 11, 475, 379);
 		getContentPane().add(canvas);
 		
@@ -252,9 +256,9 @@ public class GUIApplet extends JApplet{
 		Graphics2D g = (Graphics2D)canvas.getGraphics(); //Pega o Graphics atual do canvas e salva na variável g
 		
 		//PARTE RESPONSÁVEL PELA LIMPEZA DA TELA (SUPER MANGUE)
-		g.setPaint(Color.CYAN);
-		g.fill(new Rectangle(0, 0, 475, 379));
 		g.setPaint(Color.BLACK);
+		g.fill(new Rectangle(0, 0, 475, 379));
+		g.setPaint(Color.WHITE);
 		
 		//Parte responsável pela iteração e desenho dos pontos
 		MeuIterador itP = controller.listarPontos(); //cria um iterador com a lista de pontos do controller
@@ -274,6 +278,41 @@ public class GUIApplet extends JApplet{
 		} 
 		return g; //retorna g atualizado
 		
+	}
+	
+	public Graphics desenharCaminho() {
+		System.out.println("Desenhando o menor caminho...");
+		Graphics2D g = (Graphics2D)canvas.getGraphics();
+		g.setPaint(Color.RED);
+		String caminho = "";
+		Double tempo = menor.getColetaDestino().getTempo() + menor.getColetaDestino().getTempo();
+		
+		Lista lista1 = menor.getOrigemColeta().getPontos();
+		Lista lista2 = menor.getColetaDestino().getPontos();
+		MeuIterador iterador = (MeuIterador)lista1.iterador();
+		while(iterador.temProximo()) {
+			DoisPontos dp = (DoisPontos)iterador.obterProximo();
+			Ponto pA = dp.getPontoA();
+			Ponto pB = dp.getPontoB();
+			caminho = caminho + pA.getNome() + pB.getNome();
+			g.drawOval(pA.getCoordX(), pA.getCoordY(), 10, 10);
+			g.drawOval(pB.getCoordX(), pB.getCoordY(), 10, 10);
+			g.drawLine(pA.getCoordX() + 5, pA.getCoordY() + 5, pB.getCoordX() + 5, pB.getCoordY() + 5);
+		}
+		iterador = (MeuIterador) lista2.iterador();
+		while(iterador.temProximo()) {
+			DoisPontos dp = (DoisPontos)iterador.obterProximo();
+			Ponto pA = dp.getPontoA();
+			Ponto pB = dp.getPontoB();
+			caminho = caminho + pA.getNome() + pB.getNome();
+			g.drawOval(pA.getCoordX(), pA.getCoordY(), 10, 10);
+			g.drawOval(pB.getCoordX(), pB.getCoordY(), 10, 10);
+			g.drawLine(pA.getCoordX() + 5, pA.getCoordY() + 5, pB.getCoordX() + 5, pB.getCoordY() + 5);
+		}
+		
+		showStatus("Caminho percorrido: " + caminho + " / Tempo: " + tempo);
+		
+		return g;
 	}
 }
 
