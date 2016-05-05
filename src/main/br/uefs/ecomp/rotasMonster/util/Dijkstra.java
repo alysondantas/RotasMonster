@@ -1,5 +1,6 @@
 package br.uefs.ecomp.rotasMonster.util;
 
+import br.uefs.ecomp.rotasMonster.exceptions.DestinoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Grafo;
@@ -31,7 +32,7 @@ public class Dijkstra {
 		caminhoPercorrido = new Lista();
 	}
 	
-	public Distancia iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException{
+	public Distancia iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException, DestinoNaoEncontradoException{
 		g.setPassouPontos();
 		Ponto auxP;
 		Aresta auxA;
@@ -126,6 +127,10 @@ public class Dijkstra {
 				test.inserirInicio(celulinha);
 			}
 			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+		}
+		
+		if(test.obterTamanho()<1){
+			throw new DestinoNaoEncontradoException();
 		}
 		
 		celulinha = null;

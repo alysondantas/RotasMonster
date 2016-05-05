@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
 import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
+import br.uefs.ecomp.rotasMonster.exceptions.DestinoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Distancia;
@@ -141,6 +142,8 @@ public class GUI {
 					JOptionPane.showMessageDialog(null, "Erro Campo obrigadotorio nulo!");
 				} catch (GrafoNuloException e) {
 					JOptionPane.showMessageDialog(null, "Erro grafo sem pontos!");
+				} catch (DestinoNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Erro grafo sem conexão com o destino!");
 				}
 			}
 		});

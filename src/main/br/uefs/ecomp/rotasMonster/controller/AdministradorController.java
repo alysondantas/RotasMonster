@@ -216,7 +216,7 @@ public class AdministradorController {
 		return (MeuIterador) arestas.iterador();
 	}
 	
-	public Caminho realizarDijkstra(String sOrigem, String sColeta, String sDestino) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, GrafoNuloException{
+	public Caminho realizarDijkstra(String sOrigem, String sColeta, String sDestino) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, GrafoNuloException, DestinoNaoEncontradoException{
 		Ponto origem = recuperarPonto(sOrigem);
 		Ponto coleta = recuperarPonto(sColeta);
 		Ponto destino = recuperarPonto(sDestino);

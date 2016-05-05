@@ -20,6 +20,7 @@ import javax.swing.*;
 import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
 import br.uefs.ecomp.rotasMonster.exceptions.ArestaNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
+import br.uefs.ecomp.rotasMonster.exceptions.DestinoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.model.Aresta;
@@ -232,6 +233,8 @@ public class GUIApplet extends JApplet{
 					JOptionPane.showMessageDialog(null, "Campo obrigatório não preechido");
 				} catch (GrafoNuloException e) {
 					JOptionPane.showMessageDialog(null, "Grafo Nulo");
+				} catch (DestinoNaoEncontradoException e) {
+					JOptionPane.showMessageDialog(null, "Erro grafo sem conexão com o destino!");
 				}
 
 			}
