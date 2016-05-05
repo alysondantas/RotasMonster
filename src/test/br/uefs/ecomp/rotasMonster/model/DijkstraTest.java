@@ -1,6 +1,7 @@
 package br.uefs.ecomp.rotasMonster.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.junit.Test;
 import br.uefs.ecomp.rotasMonster.controller.AdministradorController;
 import br.uefs.ecomp.rotasMonster.exceptions.CampoObrigatorioInexistenteException;
 import br.uefs.ecomp.rotasMonster.exceptions.ConflitoException;
+import br.uefs.ecomp.rotasMonster.exceptions.DestinoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.GrafoNuloException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNaoEncontradoException;
 import br.uefs.ecomp.rotasMonster.exceptions.PontoNuloException;
@@ -150,6 +152,8 @@ public class DijkstraTest {
 		try {
 			caminho = djk.iniciaDijkstra(origem, destino);
 		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (DestinoNaoEncontradoException e) {
 			fail();
 		}
 		
@@ -317,6 +321,8 @@ public class DijkstraTest {
 			caminho = djk.iniciaDijkstra(origem, destino);
 		} catch (PontoNaoEncontradoException e) {
 			fail();
+		} catch (DestinoNaoEncontradoException e) {
+			fail();
 		}
 		
 		int tamanho = (int) caminho.getTempo();
@@ -461,6 +467,8 @@ public class DijkstraTest {
 			caminho = djk.iniciaDijkstra(origem, destino);
 		} catch (PontoNaoEncontradoException e) {
 			fail();
+		} catch (DestinoNaoEncontradoException e) {
+			fail();
 		}
 		
 		int tamanho = (int) caminho.getTempo();
@@ -597,6 +605,8 @@ public class DijkstraTest {
 		try {
 			caminho = djk.iniciaDijkstra(origem, destino);
 		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (DestinoNaoEncontradoException e) {
 			fail();
 		}
 		
@@ -735,6 +745,8 @@ public class DijkstraTest {
 			caminho = djk.iniciaDijkstra(origem, destino);
 		} catch (PontoNaoEncontradoException e) {
 			fail();
+		} catch (DestinoNaoEncontradoException e) {
+			fail();
 		}
 		
 		int tamanho = (int) caminho.getTempo();
@@ -856,6 +868,8 @@ public class DijkstraTest {
 			fail();
 		} catch (GrafoNuloException e) {
 			fail(); 
+		} catch (DestinoNaoEncontradoException e) {
+			fail();
 		}
 		
 		Distancia distanciaAC = caminho.getOrigemColeta();
@@ -867,6 +881,134 @@ public class DijkstraTest {
 //		assertEquals(6, tamanho);
 		
 //		assertEquals(6.0, caminho.getTempo(), 0);
+		
+	}
+	
+	@Test
+	public void calcularDijkstraSemCaminhoDestino(){
+		Ponto a = new Ponto("A", 1, 13, 23);
+		Ponto b = new Ponto("B", 1, 14, 23);
+		Ponto c = new Ponto("C", 1, 13, 23);
+		Ponto d = new Ponto("D", 1, 14, 23);
+		Ponto e1 = new Ponto("E", 1, 14, 23);
+		
+		try{
+			controller.cadastrarPonto(b);
+			controller.cadastrarPonto(a);
+			controller.cadastrarPonto(c);
+			controller.cadastrarPonto(d);
+			controller.cadastrarPonto(e1);
+		}catch(PontoNuloException e){
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		int contador = 0;
+		MeuIterador iterador = controller.listarPontos();
+		while(iterador.temProximo()){
+			iterador.obterProximo();
+			contador++;
+		}
+		
+		assertEquals(5, contador);
+		
+		try {
+			controller.cadastrarAresta("A", 1, "B");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("A", 3, "D");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("A", 10, "E");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("B", 5, "C");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		try {
+			controller.cadastrarAresta("C", 2, "D");
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (ConflitoException e) {
+			fail();
+		}
+		
+		
+		
+		Ponto origem = null;
+		Ponto destino = null;
+		try {
+			origem = controller.recuperarPonto("A");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		try {
+			destino = controller.recuperarPonto("E");
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (CampoObrigatorioInexistenteException e) {
+			fail();
+		}
+		
+		Grafo g = controller.getGrafo();
+		Dijkstra djk = null;
+		
+		try {
+			djk = new Dijkstra(g);
+		} catch (GrafoNuloException e) {
+			fail();
+		}
+		
+		Distancia caminho = null;
+		
+		try {
+			caminho = djk.iniciaDijkstra(origem, destino);
+		} catch (PontoNaoEncontradoException e) {
+			fail();
+		} catch (DestinoNaoEncontradoException e) {
+			assertTrue(true);
+		}
+		
+		int tamanho = (int) caminho.getTempo();
+		
+		assertEquals(10, tamanho);
+		
+		assertEquals(10.0, caminho.getTempo(), 0);
 		
 	}
 }
