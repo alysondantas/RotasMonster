@@ -282,7 +282,7 @@ public class GUIApplet extends JApplet{
 	
 	public Graphics desenharCaminho() {
 		System.out.println("Desenhando o menor caminho...");
-		Graphics2D g = (Graphics2D)canvas.getGraphics();
+		Graphics2D g = (Graphics2D)updateCanvas();
 		g.setPaint(Color.RED);
 		String caminho = "";
 		Double tempo = menor.getColetaDestino().getTempo() + menor.getColetaDestino().getTempo();
