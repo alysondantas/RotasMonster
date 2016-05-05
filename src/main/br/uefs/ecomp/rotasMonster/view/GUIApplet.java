@@ -285,7 +285,7 @@ public class GUIApplet extends JApplet{
 		Graphics2D g = (Graphics2D)updateCanvas();
 		g.setPaint(Color.RED);
 		String caminho = "";
-		Double tempo = menor.getColetaDestino().getTempo() + menor.getColetaDestino().getTempo();
+		Double tempo = menor.getOrigemColeta().getTempo() + menor.getColetaDestino().getTempo();
 		
 		Lista lista1 = menor.getOrigemColeta().getPontos();
 		Lista lista2 = menor.getColetaDestino().getPontos();
