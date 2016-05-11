@@ -14,6 +14,11 @@ public class Dijkstra {
 	private FilaPrioridade fila;
 	private Lista caminhoPercorrido;
 	
+	/**
+	 * Contstutor da classe
+	 * @param g
+	 * @throws GrafoNuloException
+	 */
 	public Dijkstra(Grafo g) throws GrafoNuloException{
 		if(g == null){
 			throw new GrafoNuloException();
@@ -23,6 +28,11 @@ public class Dijkstra {
 		caminhoPercorrido = new Lista();
 	}
 	
+	/**
+	 * Metodo para reiniciar o objeto para outro grafo
+	 * @param g
+	 * @throws GrafoNuloException
+	 */
 	public void resetaDijkstra(Grafo g) throws GrafoNuloException{
 		if(g == null){
 			throw new GrafoNuloException();
@@ -32,8 +42,16 @@ public class Dijkstra {
 		caminhoPercorrido = new Lista();
 	}
 	
+	/**
+	 * Metodo de Dijkstra
+	 * @param origem
+	 * @param destino
+	 * @return
+	 * @throws PontoNaoEncontradoException
+	 * @throws DestinoNaoEncontradoException
+	 */
 	public Distancia iniciaDijkstra(Ponto origem, Ponto destino) throws PontoNaoEncontradoException, DestinoNaoEncontradoException{
-		g.setPassouPontos();
+		g.setPassouPontos();//reinicia o boolean de visita que esta em todos os pontos do grafo
 		Ponto auxP;
 		Aresta auxA;
 		Ponto auxdestino = null;
@@ -45,11 +63,11 @@ public class Dijkstra {
 		Distancia ori = new Distancia(origem, 0);
 		distancia.inserirInicio(ori);
 		fila.inserir(0, origem);
-		//inserindo na fila
+		//inserindo na fila e na lista todos os pontos que estão no grafo
 		while(iterador.temProximo()){
 			auxP = (Ponto) iterador.obterProximo();
 			if(auxP != origem){
-					Distancia d = new Distancia(auxP, 10000);
+					Distancia d = new Distancia(auxP, 10000);//coloco a distancia como 10000 considero infinito
 					distancia.inserirInicio(d);
 					fila.inserir(10000, auxP);
 			}
@@ -65,108 +83,84 @@ public class Dijkstra {
 		Lista caminho;
 		double tamanhoU = 0;
 		double tamanhoA = 0;
-		/*
-		 * auxdestinho = v
-		 * auxP = u
-		 * 
-		 */
+		//enquanto existe elemento na fila
 		while(!fila.estaVazia()){
-			celula = (CelulaPrioridade) fila.removerInicio();
-			auxP = (Ponto) celula.getObjeto();
+			celula = (CelulaPrioridade) fila.removerInicio();//removo um elemento da fila
+			auxP = (Ponto) celula.getObjeto();//pego o ponto dele elemento
 			iterador = (MeuIterador) distancia.iterador();
-			while(iterador.temProximo()){
+			while(iterador.temProximo()){//procuro por ele na lista de distancias ja existente
 				auxD = (Distancia) iterador.obterProximo();
 				if(auxD.getP().equals(auxP)){
-					tamanhoU = auxD.getTempo();
+					tamanhoU = auxD.getTempo();//pego o tempo da origem ate ele
 				}
 			}
-			if(auxP.isPassou() == false){
+			if(auxP.isPassou() == false){//se não visitou o ponto ainda
 				auxP.setPassou(true);
 				arestas = auxP.getArestas();
 				iterador = (MeuIterador) arestas.iterador();
-				while(iterador.temProximo()){
+				while(iterador.temProximo()){//procuro por adjacentes dele
 					auxA = (Aresta) iterador.obterProximo();
 					auxdestino = auxA.getPontoDestino();
 					tamanhoA = auxA.gettempo();
 					iterador2 = (MeuIterador) distancia.iterador();
-					while(iterador2.temProximo()){
-						auxD = (Distancia) iterador2.obterProximo();
+					while(iterador2.temProximo()){//procuro na lista de distancia pelo 
+						auxD = (Distancia) iterador2.obterProximo();//procuro por cada adjacente na lista de distancia
 						atualP = auxD.getP();
 						tamanho = auxD.getTempo();
-						if(auxdestino.equals(atualP)){
+						if(auxdestino.equals(atualP)){//quando encontro ele e destino na lista paro a pesquisa
 							break;
 						}
 					}
-					if(tamanho > tamanhoU + tamanhoA){
-						auxD.setTempo(tamanhoU+tamanhoA);
+					if(tamanho > tamanhoU + tamanhoA){//se o tamnho da aresta que ja esta na lista for maior que a soma da aresta atual mais o caminho ate esse b
+						auxD.setTempo(tamanhoU+tamanhoA);//guardo essa soma na variavel que esta na lista
 						caminho = auxD.getPontos();
 						caminho.inserirInicio(atualP);
-						System.out.println(auxP.getNome()+ " " + auxdestino.getNome() );
-						fila.inserir(tamanhoU+tamanhoA, atualP);
-						
+//						System.out.println(auxP.getNome()+ " " + auxdestino.getNome() );
+						fila.inserir(tamanhoU+tamanhoA, atualP);//insiro novamente na fila essa variavel
 						DoisPontos dois = new DoisPontos(auxP, auxdestino);
-						caminhoPercorrido.inserirInicio(dois);
+						caminhoPercorrido.inserirInicio(dois);//insiro os dois pontos envolvidos no processo em uma lista com todos os caminhos que foram percorridos...
 					}
 				}
 			}
 		}
 		
-		//vc não faz ideia do que é mangue!
-		System.out.println();
-		DoisPontos celulinha;
+//		System.out.println();
+		DoisPontos auxDoisPontos;
 		Ponto a = null;
-		Lista test = new Lista();
+		Lista trajeto = new Lista();
 		iterador2 = (MeuIterador) caminhoPercorrido.iterador();
-		while(iterador2.temProximo()){
-			celulinha = (DoisPontos) iterador2.obterProximo();
-			if(test.obterTamanho() == 0 && celulinha.getPontoB().equals(destino)){ // 
-				test.inserirInicio(celulinha);
-				a = celulinha.getPontoA();
-			}else if(celulinha.getPontoB().equals(a)){
-				a = celulinha.getPontoA();
-				test.inserirInicio(celulinha);
+		while(iterador2.temProximo()){//percorro o caminho percorrido pelo descrava que vai estar de traz para frente
+			auxDoisPontos = (DoisPontos) iterador2.obterProximo();
+			if(trajeto.obterTamanho() == 0 && auxDoisPontos.getPontoB().equals(destino)){ // se a lista do trajeto foz vazia e se o ponto B for o destino pode inserir
+				trajeto.inserirInicio(auxDoisPontos);//insere os dois pontos na lista
+				a = auxDoisPontos.getPontoA();//a pega o ponto A
+			}else if(auxDoisPontos.getPontoB().equals(a)){ // se não se o ponto A (Guardado) for igual ao B do atual
+				a = auxDoisPontos.getPontoA();
+				trajeto.inserirInicio(auxDoisPontos);//insere os dois pontos na lista
 			}
-			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+//			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
 		}
 		
-		if(test.obterTamanho()<1){
+		if(trajeto.obterTamanho()<1){//se não tiver elementos na lista lança exceção
 			throw new DestinoNaoEncontradoException();
 		}
 		
-		celulinha = null;
-		
-
-		System.out.println();
-		DoisPontos antescelulinha = null;
-		iterador2 = (MeuIterador) test.iterador();
+		auxDoisPontos = null;
+//		System.out.println();
+		iterador2 = (MeuIterador) trajeto.iterador();
 		while(iterador2.temProximo()){
-			antescelulinha = celulinha;
-			celulinha = (DoisPontos) iterador2.obterProximo();
-			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
+			auxDoisPontos = (DoisPontos) iterador2.obterProximo();
+//			System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
 		}
-		System.out.println("Destino encontrado é: " + celulinha.getPontoB().getNome());
-		System.out.println("Destino é: " + destino.getNome());
-//			if(antescelulinha.getPontoB().equals(destino)){
-//				System.out.println("Removido o destino invalido");
-//				test.removerFinal();
-//			}else if(!celulinha.getPontoB().equals(destino)){//se o ultimo ponto não for o destino é pq o menor caminho é direto da origem para o destino
-//				System.out.println("Mas o destino encontrdo não é o destino");
-//				test = new Lista();
-//				celulinha = new DoisPontos(origem, destino);
-//				test.inserirInicio(celulinha);
-//				System.out.println(celulinha.getPontoA().getNome() + " " + celulinha.getPontoB().getNome());
-//				System.out.println();
-//			}
-			
-			
+//		System.out.println("Destino encontrado é: " + celulinha.getPontoB().getNome());
+//		System.out.println("Destino é: " + destino.getNome());
 		iterador = (MeuIterador) distancia.iterador();
 		tamanho = -1;
-		while(iterador.temProximo()){
+		while(iterador.temProximo()){//procuro na lista de distancia a distancia ate o destino
 			auxD = (Distancia) iterador.obterProximo();
-			if(auxD.getP().equals(destino)){
-				tamanho = auxD.getTempo();
-//				caminho = auxD.getPontos();
-				auxD.setPontos(test);
+			if(auxD.getP().equals(destino)){//se encontrar
+				tamanho = auxD.getTempo();//tamanh0 recebe a distancia
+				auxD.setPontos(trajeto);//e o trajeto fica dentro do objeto distancia
 				break;
 			}
 		}
