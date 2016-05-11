@@ -10,11 +10,21 @@ public class AdministradorController {
 	public AdministradorController(){
 		
 	}
-	
+	/**
+	 * Metodo para retornar o grafo
+	 * @return
+	 */
 	public Grafo getGrafo(){
 		return grafo;
 	}
-	
+	/**
+	 * Metodo de cadastrar o Ponto
+	 * @param p
+	 * @return
+	 * @throws PontoNuloException
+	 * @throws CampoObrigatorioInexistenteException
+	 * @throws ConflitoException
+	 */
 	public Ponto cadastrarPonto(Ponto p) throws PontoNuloException, CampoObrigatorioInexistenteException, ConflitoException{
 		if(p==null){
 			throw new PontoNuloException();
@@ -38,7 +48,13 @@ public class AdministradorController {
 	public MeuIterador listarPontos(){
 		return (MeuIterador) grafo.iterador();
 	}
-	
+	/**
+	 * Metodo de recuperar o Ponto
+	 * @param nomeP
+	 * @return
+	 * @throws PontoNaoEncontradoException
+	 * @throws CampoObrigatorioInexistenteException
+	 */
 	public Ponto recuperarPonto(String nomeP) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException {
 		Ponto ponto;
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
@@ -54,7 +70,15 @@ public class AdministradorController {
 		
 		throw new PontoNaoEncontradoException();
 	}
-	
+	/**
+	 * Metodo de alterar Ponto
+	 * @param nomeP
+	 * @param novonomeP
+	 * @param tipo
+	 * @throws PontoNaoEncontradoException
+	 * @throws CampoObrigatorioInexistenteException
+	 * @throws ConflitoException
+	 */
 	public void alterarPonto(String nomeP, String novonomeP, int tipo) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, ConflitoException{
 		MeuIterador iterador = (MeuIterador) grafo.iterador();
 		Ponto ponto = null;
@@ -79,7 +103,15 @@ public class AdministradorController {
 		}
 		
 	}
-	
+	/**
+	 * Metodo de remover Produto
+	 * @param nomeP
+	 * @return
+	 * @throws PontoNaoEncontradoException
+	 * @throws CampoObrigatorioInexistenteException
+	 * @throws ArestaNaoEncontradoException
+	 * @throws PontoNuloException
+	 */
 	public Ponto removerPonto(String nomeP) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, ArestaNaoEncontradoException, PontoNuloException{
 		Ponto remover = recuperarPonto(nomeP);
 		Ponto auxP;
@@ -89,7 +121,6 @@ public class AdministradorController {
 		while(iterador.temProximo()){
 			auxA = (Aresta) iterador.obterProximo();
 			auxP = auxA.getPontoDestino();
-			//pode ser que de null point por estar usando auxA e remover ela... se sim é so dar null a auxA antes de chamar o metodo
 			removeAresta(remover, auxP);
 		}
 		
@@ -99,7 +130,14 @@ public class AdministradorController {
 		}
 		return remover;
 	}
-	
+	/**
+	 * Metodo para remover as arestas
+	 * @param origem
+	 * @param destino
+	 * @return
+	 * @throws ArestaNaoEncontradoException
+	 * @throws PontoNuloException
+	 */
 	public Aresta removeAresta(Ponto origem, Ponto destino) throws ArestaNaoEncontradoException, PontoNuloException{
 		if(origem == null || destino == null){
 			throw new PontoNuloException();
@@ -146,7 +184,16 @@ public class AdministradorController {
 		return removida;
 	}
 		
-	
+	/**
+	 * Metodo para cadastrar uma aresta
+	 * @param nomeOrigem
+	 * @param tempo
+	 * @param nomeDestino
+	 * @return
+	 * @throws CampoObrigatorioInexistenteException
+	 * @throws PontoNaoEncontradoException
+	 * @throws ConflitoException
+	 */
 	public Aresta cadastrarAresta(String nomeOrigem, double tempo, String nomeDestino) throws CampoObrigatorioInexistenteException, PontoNaoEncontradoException, ConflitoException{
 		Ponto origem = null;
 		Ponto destino = null;
@@ -209,22 +256,36 @@ public class AdministradorController {
 		
 		return arestaO;
 	}
-	
+	/**
+	 * Metodo para listar as arestas
+	 * @param nome
+	 * @return
+	 * @throws PontoNaoEncontradoException
+	 * @throws CampoObrigatorioInexistenteException
+	 */
 	public MeuIterador listarArestas(String nome) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException{
 		Ponto p = recuperarPonto(nome);
 		Lista arestas = p.getArestas();
 		return (MeuIterador) arestas.iterador();
 	}
-	
+	/**
+	 * Metodo que realiza o Dijkstra
+	 * @param sOrigem
+	 * @param sColeta
+	 * @param sDestino
+	 * @return
+	 * @throws PontoNaoEncontradoException
+	 * @throws CampoObrigatorioInexistenteException
+	 * @throws GrafoNuloException
+	 * @throws DestinoNaoEncontradoException
+	 */
 	public Caminho realizarDijkstra(String sOrigem, String sColeta, String sDestino) throws PontoNaoEncontradoException, CampoObrigatorioInexistenteException, GrafoNuloException, DestinoNaoEncontradoException{
 		Ponto origem = recuperarPonto(sOrigem);
 		Ponto coleta = recuperarPonto(sColeta);
 		Ponto destino = recuperarPonto(sDestino);
 		
-		
 		Dijkstra djkCD = new Dijkstra(grafo);
 		Dijkstra djkOC = new Dijkstra(grafo);
-		
 		
 		Distancia caminhoOC = djkOC.iniciaDijkstra(origem, coleta);
 		grafo.setPassouPontos();
