@@ -1,14 +1,12 @@
-package br.uefs.ecomp.rotasMonster.util;
-
 /*******************************************************************************
 
-Autor: Alyson Felipe Oliveira Dantas
+Autor: Alyson Felipe Oliveira Dantas e Bruno Menezes de Lima
 
 Componente Curricular: MI - Algoritmos II
 
-Concluido em: 12/12/2015
+Concluido em: 03/05/2016
 
-Declaro que este código foi elaborado por mim de forma individual e não contém nenhum
+Declaro que este código foi elaborado por esta dupla e não contém nenhum
 
 trecho de código de outro colega ou de outro autor, tais como provindos de livros e
 
@@ -18,12 +16,9 @@ de outra autoria que não a minha está destacado com uma citação para o autor e a
 
 do código, e estou ciente que estes trechos não serão considerados para fins de avaliação.
 
-******************************************************************************************/
-/**
- * 
- * @author Alyson
- * Classe para a celula generica
- */
+ ******************************************************************************************/
+package br.uefs.ecomp.rotasMonster.util;
+
 public class Celula {//Classe para um celula generica
 	private Celula proximo;//Referencia para a proxima celula
 	private Object objeto;//Objeto generico que vai estar dentro da celula
